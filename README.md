@@ -1,15 +1,21 @@
 # `Pets Crew Website`
 
 Project Overview
+
 Project Name: Pets Crew Website
+
 Team Number: 02
+
 Course: PRJ666 - Winter 2025
+
 Project Duration: 1 Semester
 
 ## Team Members
 
 Aryan Tuwar
+
 Haroon Bajwa
+
 Vivian Liu
 
 ## Table of Contents
