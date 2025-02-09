@@ -2,17 +2,15 @@
 
 Project Overview
 Project Name: Pets Crew Website
-Team Number: 3
-Course: PRJ566 - Summer 2024
-Project Duration: 2 Semesters
+Team Number: 02
+Course: PRJ666 - Winter 2025
+Project Duration: 1 Semester
 
 ## Team Members
 
-Mehtab Singh Jagde
 Aryan Tuwar
-Margil Patel
-Shubh Jani
-Tapan Panjabi
+Haroon Bajwa
+Vivian Liu
 
 ## Table of Contents
 
