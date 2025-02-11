@@ -1,0 +1,97 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #191919;
+    color: white;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-links li a:hover,
+  .nav-links li a.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .nav-social {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .nav-social li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    color: #191919;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-social li:hover {
+    background-color: #007bff;
+    color: white;
+  }
+
+  /* Buttons Container */
+.navbar-buttons {
+    display: flex;
+    gap: 1rem; /* Space between the buttons */
+  }
+  
+  /* Cart and Profile Buttons */
+  .navbar-button {
+    background-color: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 1rem;
+  }
+  
+  .navbar-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
