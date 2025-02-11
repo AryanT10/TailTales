@@ -1,8 +1,8 @@
-# `Pets Crew Website`
+# `TailTales`
 
 Project Overview
 
-Project Name: Pets Crew Website
+Project Name: TailTales
 
 Team Number: 02
 
@@ -47,11 +47,11 @@ Introduction
 
 ## Document Purpose
 
-This document outlines the software requirements for the Pets Crew Website project. It is intended to guide the development and ensure all stakeholders have a clear understanding of the project's goals and requirements.
+This document outlines the software requirements for the TailTales project. It is intended to guide the development and ensure all stakeholders have a clear understanding of the project's goals and requirements.
 
 ## Intended Audience
 
-This document is intended for the project team, stakeholders, and anyone involved in the development and maintenance of the Pets Crew Website.
+This document is intended for the project team, stakeholders, and anyone involved in the development and maintenance of the TailTales.
 
 ## Project Proposal
 
@@ -67,9 +67,9 @@ A successful solution would: Provide an easy-to-use platform for booking service
 
 ## Product Vision
 
-For: Pet owners and service providers.  <br/>
-Who: Need a reliable and user-friendly platform for managing pet services.  <br/>
-The Pets Crew Website: Is a pet services management platform.  <br/>
-That: Simplifies the process of finding and booking pet services.  <br/>
-Unlike: Traditional methods of finding pet services.  <br/>
+For: Pet owners and service providers.
+Who: Need a reliable and user-friendly platform for managing pet services.
+The TailTales: Is a pet services management platform.
+That: Simplifies the process of finding and booking pet services.
+Unlike: Traditional methods of finding pet services.
 Our product: Offers a comprehensive and community-oriented solution.
