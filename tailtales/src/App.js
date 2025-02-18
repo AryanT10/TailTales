@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import TrendingProducts from "./components/TrendingProucts";
@@ -10,17 +11,29 @@ import "./App.css";
 
 export default function App() {
   return (
-    <div className="App">
-      {/* Navbar Component */}
-      <Navbar />
+    <Router>
+      <div className="App">
+        {/* Navbar Component so its always visible*/}
+        <Navbar />
 
-      {/* Other Components */}
-      <HeroSection />
-      <TrendingProducts />
-      <AppointmentSection />
-      <BlogSection />
-      <SignupSection />
-      <Footer />
-    </div>
+        {/* Route Definitions */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <HeroSection />
+                <TrendingProducts />
+                <AppointmentSection />
+                <BlogSection />
+                <SignupSection />
+                <Footer />
+              </>
+            }
+          />
+        </Routes>
+
+      </div>
+    </Router>
   );
 }
