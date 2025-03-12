@@ -18,6 +18,8 @@ Haroon Bajwa
 
 Vivian Liu
 
+Mrinaal Nagpal
+
 ## Table of Contents
 
 Introduction
@@ -61,15 +63,23 @@ The project aims to develop a comprehensive website for pet owners and pet servi
 
 ## Problem Statement
 The Problem of: Lack of a centralized platform for pet services.  <br/>
+
 Affects: Pet owners and service providers.  <br/>
+
 The impact of which is: Difficulty in finding reliable pet services and managing pet care.  <br/>
+
 A successful solution would: Provide an easy-to-use platform for booking services, sharing pet care information, and connecting with other pet owners.  <br/>
 
 ## Product Vision
 
-For: Pet owners and service providers.
-Who: Need a reliable and user-friendly platform for managing pet services.
-The TailTales: Is a pet services management platform.
-That: Simplifies the process of finding and booking pet services.
-Unlike: Traditional methods of finding pet services.
-Our product: Offers a comprehensive and community-oriented solution.
+For: Pet owners and service providers. <br/>
+
+Who: Need a reliable and user-friendly platform for managing pet services. <br/>
+
+The TailTales: Is a pet services management platform. <br/>
+
+That: Simplifies the process of finding and booking pet services. <br/>
+
+Unlike: Traditional methods of finding pet services. <br/>
+
+Our product: Offers a comprehensive and community-oriented solution. <br/>
