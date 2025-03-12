@@ -1,0 +1,111 @@
+/* General Page Styling */
+.our-story-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #fdfbfb, #f4f4f4);
+    font-family: "Quicksand", "Poppins", sans-serif;
+    padding: 20px;
+}
+
+/* Container Styling */
+.our-story-container {
+    max-width: 900px;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 4px solid #ffeaa7;
+}
+
+/* Headings */
+.our-story-container h1 {
+    font-size: 34px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    background: #ffeaa7;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.our-story-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #34495e;
+    margin-top: 30px;
+    border-bottom: 2px dashed #3498db;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Paragraph Styling */
+.our-story-container p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Lists (Our Vision & Why TailTales) */
+.vision-list, .why-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+/* List Items */
+.vision-list li, .why-list li {
+    background: #eaf2ff;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+/* Hover Effect */
+.vision-list li:hover, .why-list li:hover {
+    background: #ffeaa7;
+    transform: scale(1.02);
+}
+
+/* Icons */
+.vision-list li::before, .why-list li::before {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* CTA Button */
+.cta {
+    display: inline-block;
+    background: #ff7675;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: 0.3s;
+    box-shadow: 0px 4px 10px rgba(255, 118, 117, 0.3);
+}
+
+.cta:hover {
+    background: #d63031;
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(255, 118, 117, 0.5);
+}

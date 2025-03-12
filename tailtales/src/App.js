@@ -7,13 +7,14 @@ import AppointmentSection from "./components/AppointmentSection";
 import BlogSection from "./components/BlogSection";
 import SignupSection from "./components/SignupSection";
 import Footer from "./components/Footer";
+import OurStory from "./components/OurStory";
 import "./App.css";
 
 export default function App() {
   return (
     <Router>
       <div className="App">
-        {/* Navbar Component so its always visible*/}
+        {/* Navbar Component so it's always visible */}
         <Navbar />
 
         {/* Route Definitions */}
@@ -31,8 +32,11 @@ export default function App() {
               </>
             }
           />
-        </Routes>
 
+          {/* Move OurStory to a Separate Route */}
+          <Route path="/our-story" element={<OurStory />} />
+
+        </Routes>
       </div>
     </Router>
   );
