@@ -16,8 +16,20 @@
 }
 
 .carousel-wrapper {
-  overflow: hidden;
   position: relative;
+}
+
+.carousel-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .my-carousel {
@@ -27,6 +39,7 @@
   align-items: stretch;
   transition: all 0.5s ease;
   margin: 2rem;
+  padding: 1rem 2.5rem;
 }
 
 .scroll-carousel-slider {
