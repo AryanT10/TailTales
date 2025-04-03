@@ -1,75 +1,90 @@
 .trending-products-container {
-    text-align: center;
-    padding: 2rem;
-    margin: 1rem;
-    border-radius: 30px;
-    overflow: hidden;
-    position: relative;
-    background: rgba(149, 147, 147, 0.3); /* Semi-transparent white */
-    backdrop-filter: blur(10px); /* Blurry effect */
-    border-radius: 15px; /* Soft rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-
-  }
-  
-  .carousel-wrapper {
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    padding-top: 1rem;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
-    padding: 2rem;
-  }
-  
-  .carousel {
-    display: flex;
-    transition: transform 1.2s ease-in-out;
-  }
-  
-  .product-card {
-    width: 200px;
-    height: 250px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 1rem;
-    margin-left: 10px;
-    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
-  }
-
-  .product-card.active {
-    transform: scale(1.3);
-    opacity: 1;
-    padding: auto;
-    transition: transform 1s ease-in-out; /* Smooth zoom */
+  padding: 2rem 1rem;
+  background: linear-gradient(145deg, #ffffff, #f2f2f2);
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+  margin: 1rem auto;
+  max-width: 90vw;
+  transition: all 0.3s ease;
 }
-  
-  .product-card img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-  }
-  
-  .product-card h3 {
-    margin: 10px 0;
-    font-size: 1rem;
-  }
-  
-  .product-card p {
-    font-size: 0.9rem;
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  .product-card:nth-child(5) {
-    transform: scale(1.3);
-    opacity: 1;
-  }
-  
+
+.trending-products-container h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.my-carousel {
+  display: flex;
+  gap: 2rem;
+  scroll-behavior: smooth;
+  align-items: stretch;
+  transition: all 0.5s ease;
+  margin: 2rem;
+}
+
+.scroll-carousel-slider {
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  padding: 3rem 2rem;
+  border-radius: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  overflow: visible; /* Allow cards to scale outside */
+  min-height: 440px; /* Ensures enough room for zoomed cards */
+  transition: background 0.3s ease-in-out;
+  margin-top: 2rem;
+}
+
+.my-slide {
+  width: 220px;
+  height: 300px;
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  padding: 1.2rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #eee;
+}
+
+.my-slide:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+  background: #fff;
+}
+
+.my-slide img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-top: 10px;
+  margin-bottom: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.my-slide h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  min-height: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.my-slide p {
+  font-size: 1.1rem;
+  color: #007bff;
+  font-weight: bold;
+  margin-top: auto;
+}
