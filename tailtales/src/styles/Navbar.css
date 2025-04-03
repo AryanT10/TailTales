@@ -45,7 +45,7 @@
   
   .nav-links li a:hover,
   .nav-links li a.active {
-    background-color: #007bff;
+    background-color: #ff6b6b;
     color: white;
   }
   
@@ -81,8 +81,8 @@
   /* Cart and Profile Buttons */
   .navbar-button {
     background-color: transparent;
-    border: 1px solid #007bff;
-    color: #007bff;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     cursor: pointer;
@@ -91,7 +91,7 @@
   }
   
   .navbar-button:hover {
-    background-color: #007bff;
+    background-color: #ff6b6b;
     color: white;
   }
   
