@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect } from "react";
 import ScrollCarousel from 'scroll-carousel';
 import 'scroll-carousel/dist/scroll.carousel.min.css';
 

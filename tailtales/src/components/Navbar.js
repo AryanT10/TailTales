@@ -1,19 +1,29 @@
 import React from "react";
 import "../styles/Navbar.css";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../services/firebase";
 import { motion } from "framer-motion";
 import logo from "../images/logo.png";
-import CartPage from "../components/CartPage";
-import ProfilePage from "../components/ProfilePage";
 
-export default function Navbar() {
+export default function Navbar({user}) {
 
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
 
   const navbarVariants = {
     hidden: { opacity: 0, y: -50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+  
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
@@ -49,6 +59,7 @@ export default function Navbar() {
           >
             Cart
           </motion.button>
+          {currentUser ? (
           <motion.button
             className="navbar-button"
             whileHover={{ scale: 1.1 }}
@@ -57,14 +68,18 @@ export default function Navbar() {
           >
             Profile
           </motion.button>
+        ) : (
+          <motion.button
+            className="navbar-button"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate("/login")} // Navigates to login page first
+          >
+            Login
+          </motion.button>
+        )}
         </motion.div>
       </motion.nav>
-
-      {/* Routes for Cart and Profile (Inside Navbar.js) */}
-      <Routes>
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-      </Routes>
     </>
   );
 }
