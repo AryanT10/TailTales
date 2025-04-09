@@ -1,10 +1,10 @@
 import React from 'react'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Login from './components/Login';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
-import TrendingProducts from './components/TrendingProucts'
+import TrendingProducts from './components/TrendingProducts'
 import AppointmentSection from './components/AppointmentSection'
 import BlogSection from './components/BlogSection'
 import SignupSection from './components/SignupSection'
@@ -13,15 +13,22 @@ import OurStory from './components/OurStory'
 import './App.css'
 import ShopInfo from './components/ShopInfo'
 import ProfilePage from './components/ProfilePage';
+import CheckAppointment from './components/CheckAppointment';
+import Contact from './components/Contact';
 // authentication state
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./services/firebase";
 
+// Protected route component
+const ProtectedRoute = ({ user, children }) => {
+  if (!user) {
+    return <Navigate to="/login" state={{ from: "/check-appointment" }} replace />;
+  }
+  return children;
+};
 
 export default function App() {
-
   const [user, setUser] = useState(null);
-
 
   // Firebase listener
   useEffect(() => {
@@ -56,10 +63,20 @@ export default function App() {
           <Route path="/shop" element={<ShopInfo />} />
           {/* Move OurStory to a Separate Route */}
           <Route path="/our-story" element={<OurStory />} />
-          {/* New Routes for Login and Profile */}
+          {/* Contact Page Route */}
+          <Route path="/contact" element={<Contact />} />
+          {/* Protected Route for Check Appointment */}
+          <Route 
+            path="/check-appointment" 
+            element={
+              <ProtectedRoute user={user}>
+                <CheckAppointment user={user} />
+              </ProtectedRoute>
+            } 
+          />
+          {/* Routes for Login and Profile */}
           <Route path="/login" element={<Login onLogin={(user) => setUser(user)} />} />
           <Route path="/profile" element={<ProfilePage user={user} onLogout={() => setUser(null)} />} />
-
         </Routes>
       </div>
     </Router>

@@ -1,0 +1,79 @@
+.signup-section {
+    background: linear-gradient(to right, #ffe9e9, #fff5e1);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 20px;
+    margin: 2rem auto;
+    max-width: 1200px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  .signup-section h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .signup-section p {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .email-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .email-input {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .email-input:focus {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
+  }
+  
+  .signup-button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    min-width: 150px;
+  }
+  
+  .signup-button:hover {
+    background-color: #ffffff;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive design */
+  @media (min-width: 768px) {
+    .email-form {
+      flex-direction: row;
+    }
+    
+    .email-input {
+      flex: 1;
+    }
+    
+    .signup-button {
+      min-width: auto;
+    }
+  }

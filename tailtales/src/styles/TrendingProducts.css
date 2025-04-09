@@ -1,35 +1,73 @@
+/* Enhanced Trending Products Styling */
 .trending-products-container {
-  padding: 2rem 1rem;
-  background: linear-gradient(to bottom right, #fff7f0, #ffe9e9);
+  padding: 4rem 2rem;
+  background: linear-gradient(to right, #fff5e1, #ffe9e9);
   border-radius: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
-  margin: 1rem auto;
-  max-width: 90vw;
-  transition: all 0.3s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  margin: 3rem auto;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Decorative elements */
+.trending-products-container::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 107, 107, 0.15), transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Fix for the title positioning */
 .trending-products-container h2 {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #333;
+  margin-bottom: 2.5rem;
+  position: relative;
+  width: 100%;
+  /* Make the title take the full width */
+  display: block;
+  /* Changed from inline-block to block */
+  left: auto;
+  /* Remove the left positioning */
+  transform: none;
+  /* Remove the transform */
+}
+
+.trending-products-container h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: #ff6b6b;
+  border-radius: 2px;
+}
+
+.trending-products-container h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: #ff6b6b;
+  border-radius: 2px;
 }
 
 .carousel-wrapper {
   position: relative;
-}
-
-.carousel-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
-  z-index: 0;
-  pointer-events: none;
+  padding: 1.5rem 0;
 }
 
 .my-carousel {
@@ -38,28 +76,17 @@
   scroll-behavior: smooth;
   align-items: stretch;
   transition: all 0.5s ease;
-  margin: 2rem;
-  padding: 1rem 2.5rem;
-}
-
-.scroll-carousel-slider {
-  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
-  padding: 3rem 2rem;
-  border-radius: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  overflow: visible; /* Allow cards to scale outside */
-  min-height: 440px; /* Ensures enough room for zoomed cards */
-  transition: background 0.3s ease-in-out;
-  margin-top: 2rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
 }
 
 .my-slide {
-  width: 220px;
-  height: 300px;
-  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  padding: 1.2rem 1rem;
+  width: 250px;
+  height: 320px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -67,37 +94,85 @@
   align-items: center;
   transition: all 0.4s ease;
   cursor: pointer;
-  position: relative;
-  border: 1px solid #eee;
+  border: 1px solid #f0f0f0;
 }
 
 .my-slide:hover {
-  transform: translateY(-6px) scale(1.05);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
-  background: #fff;
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.25);
+  border-color: rgba(255, 107, 107, 0.2);
 }
 
 .my-slide img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
-  margin-top: 10px;
-  /* margin-bottom: 1.2rem; */
+  margin: 0 auto 1.5rem;
   transition: transform 0.3s ease;
 }
 
+.my-slide:hover img {
+  transform: scale(1.08);
+}
+
 .my-slide h3 {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: #222;
-  min-height: 3.5rem;
-  margin-bottom: 0.5rem;
+  color: #333;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+  min-height: 3rem;
 }
 
 .my-slide p {
-  font-size: 1.1rem;
-  color: #ff0000;
+  font-size: 1.25rem;
+  color: #ff6b6b;
   font-weight: bold;
-  margin-top: auto;
-  
+  padding: 0.5rem 1rem;
+  background-color: #fff0f0;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 0.8rem;
+}
+
+/* Add a "shop now" button */
+.shop-now-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.my-slide:hover .shop-now-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.shop-now-btn:hover {
+  background-color: #ff5252;
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .trending-products-container {
+    padding: 3rem 1rem;
+  }
+
+  .trending-products-container h2 {
+    font-size: 2rem;
+  }
+
+  .my-slide {
+    width: 220px;
+    height: 300px;
+    padding: 1rem;
+  }
 }
