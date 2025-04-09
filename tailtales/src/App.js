@@ -15,6 +15,7 @@ import ShopInfo from './components/ShopInfo'
 import ProfilePage from './components/ProfilePage';
 import CheckAppointment from './components/CheckAppointment';
 import Contact from './components/Contact';
+import LogoutConfirmation from './components/LogoutConfirmation';
 // authentication state
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./services/firebase";
@@ -74,9 +75,10 @@ export default function App() {
               </ProtectedRoute>
             } 
           />
-          {/* Routes for Login and Profile */}
+          {/* Routes for Login, Profile, and Logout Confirmation */}
           <Route path="/login" element={<Login onLogin={(user) => setUser(user)} />} />
           <Route path="/profile" element={<ProfilePage user={user} onLogout={() => setUser(null)} />} />
+          <Route path="/logout-confirmation" element={<LogoutConfirmation />} />
         </Routes>
       </div>
     </Router>

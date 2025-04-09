@@ -1,12 +1,16 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage({ user, onLogout }) {
+  const navigate = useNavigate();
+  
   const handleLogout = async () => {
     try {
       await signOut(auth);
       onLogout(); // Notify parent that user logged out
+      navigate("/logout-confirmation"); // Navigate to logout confirmation page
     } catch (error) {
       console.error("Logout failed:", error.message);
     }
