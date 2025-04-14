@@ -4,6 +4,7 @@ import Login from './components/Login';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
+import CartPage from './components/CartPage'
 import TrendingProducts from './components/TrendingProducts'
 import AppointmentSection from './components/AppointmentSection'
 import BlogSection from './components/BlogSection'
@@ -75,6 +76,9 @@ export default function App() {
               </ProtectedRoute>
             } 
           />
+          
+          <Route path="/cart" element={<CartPage />} />
+
           {/* Routes for Login, Profile, and Logout Confirmation */}
           <Route path="/login" element={<Login onLogin={(user) => setUser(user)} />} />
           <Route path="/profile" element={<ProfilePage user={user} onLogout={() => setUser(null)} />} />

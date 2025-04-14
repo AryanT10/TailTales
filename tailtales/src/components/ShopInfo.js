@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../styles/ShopInfo.css';
 import product1 from "../images/product1.png";
 import product2 from "../images/product2.png";
@@ -11,6 +12,8 @@ import product8 from "../images/product8.png";
 import product9 from "../images/product9.png";
 
 const ShopInfo = () => {
+  const navigate = useNavigate();
+
   const [products] = useState([
     { id: 1, name: "Royal Canin Small Dog Food", price: "$7.80", image: product1 },
     { id: 2, name: "Rug Rope for Dogs", price: "$10", image: product2 },
@@ -27,6 +30,8 @@ const ShopInfo = () => {
     // In future implement actual cart functionality
     console.log(`Added product ${productId} to cart`);
     // You could show a notification here
+
+    navigate('/cart');
   };
 
   return (
