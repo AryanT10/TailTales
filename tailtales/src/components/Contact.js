@@ -36,12 +36,33 @@ export default function Contact() {
   return (
     <div className="contact-page">
       <div className="contact-container">
-        <h1>Meet Our Team</h1>
+        <h1>Get In Touch</h1>
         <p className="contact-intro">
           We're passionate about pets and dedicated to creating the best experience for pet owners and service providers.
-          Feel free to reach out to any of our team members with questions or feedback!
+          Feel free to reach out with questions, feedback, or partnership opportunities!
         </p>
 
+        <div className="contact-info-section">
+          <div className="address-card">
+            <div className="address-icon">📍</div>
+            <h3>Our Address</h3>
+            <p>TailTales Pet Shop</p>
+            <p>123 Maple Avenue, Suite 405</p>
+            <p>Toronto, ON M5V 2T6</p>
+            <p>Canada</p>
+          </div>
+          
+          <div className="address-card">
+            <div className="address-icon">📞</div>
+            <h3>Contact Info</h3>
+            <p>Email: contact@tailtales.ca</p>
+            <p>Phone: (437) 555-8976</p>
+            <p>Hours: Mon-Fri 9am-6pm ET</p>
+            <p>Weekend: 10am-4pm ET</p>
+          </div>
+        </div>
+
+        <h2>Meet Our Team</h2>
         <div className="team-grid">
           {teamMembers.map((member) => (
             <div key={member.id} className="team-card">
