@@ -20,6 +20,8 @@ import LogoutConfirmation from './components/LogoutConfirmation';
 // authentication state
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./services/firebase";
+// Import CartProvider
+import { CartProvider } from './context/CartContext';
 
 // Protected route component
 const ProtectedRoute = ({ user, children }) => {
@@ -41,50 +43,52 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        {/* Navbar Component so it's always visible */}
-        <Navbar />
+    <CartProvider>
+      <Router>
+        <div className="App">
+          {/* Navbar Component so it's always visible */}
+          <Navbar user={user} />
 
-        {/* Route Definitions */}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <HeroSection />
-                <TrendingProducts />
-                <AppointmentSection />
-                <BlogSection />
-                <SignupSection />
-                <Footer />
-              </>
-            }
-          />
+          {/* Route Definitions */}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <HeroSection />
+                  <TrendingProducts />
+                  <AppointmentSection />
+                  <BlogSection />
+                  <SignupSection />
+                  <Footer />
+                </>
+              }
+            />
 
-          <Route path="/shop" element={<ShopInfo />} />
-          {/* Move OurStory to a Separate Route */}
-          <Route path="/our-story" element={<OurStory />} />
-          {/* Contact Page Route */}
-          <Route path="/contact" element={<Contact />} />
-          {/* Protected Route for Check Appointment */}
-          <Route 
-            path="/check-appointment" 
-            element={
-              <ProtectedRoute user={user}>
-                <CheckAppointment user={user} />
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route path="/cart" element={<CartPage />} />
+            <Route path="/shop" element={<ShopInfo />} />
+            {/* Move OurStory to a Separate Route */}
+            <Route path="/our-story" element={<OurStory />} />
+            {/* Contact Page Route */}
+            <Route path="/contact" element={<Contact />} />
+            {/* Protected Route for Check Appointment */}
+            <Route 
+              path="/check-appointment" 
+              element={
+                <ProtectedRoute user={user}>
+                  <CheckAppointment user={user} />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route path="/cart" element={<CartPage user={user} />} />
 
-          {/* Routes for Login, Profile, and Logout Confirmation */}
-          <Route path="/login" element={<Login onLogin={(user) => setUser(user)} />} />
-          <Route path="/profile" element={<ProfilePage user={user} onLogout={() => setUser(null)} />} />
-          <Route path="/logout-confirmation" element={<LogoutConfirmation />} />
-        </Routes>
-      </div>
-    </Router>
+            {/* Routes for Login, Profile, and Logout Confirmation */}
+            <Route path="/login" element={<Login onLogin={(user) => setUser(user)} />} />
+            <Route path="/profile" element={<ProfilePage user={user} onLogout={() => setUser(null)} />} />
+            <Route path="/logout-confirmation" element={<LogoutConfirmation />} />
+          </Routes>
+        </div>
+      </Router>
+    </CartProvider>
   )
 }

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ScrollCarousel from 'scroll-carousel';
 import 'scroll-carousel/dist/scroll.carousel.min.css';
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext"; // Import useCart hook
 
 import product1 from "../images/product1.png";
 import product2 from "../images/product2.png";
@@ -17,6 +18,8 @@ import "../styles/TrendingProducts.css";
 
 export default function TrendingProducts() {
   const navigate = useNavigate();
+  const { addItem } = useCart(); // Get addItem function from cart context
+  const [addedToCart, setAddedToCart] = useState(null);
   
   const products = [
     { id: 1, name: "Royal Canin Small Dog Food", price: "$7.80", image: product1 },
@@ -43,15 +46,55 @@ export default function TrendingProducts() {
     return () => carousel.destroy(); // Clean up on unmount
   }, []);
 
-  const handleShopNow = (e, productId) => {
+  const handleShopNow = (e, product) => {
     e.stopPropagation();
-    // Navigate to product detail page or shop page with filter
-    navigate(`/shop?product=${productId}`);
+    
+    // Add to cart
+    addItem(product);
+    
+    // Show notification
+    setAddedToCart(product.id);
+    setTimeout(() => setAddedToCart(null), 2000);
+  };
+
+  const navigateToCart = () => {
+    navigate('/cart');
   };
 
   return (
     <div className="trending-products-container">
       <h2>Trending Products</h2>
+      
+      {/* Cart notification */}
+      {addedToCart && (
+        <div className="cart-notification" 
+             style={{
+                background: "#ff6b6b", 
+                color: "white", 
+                padding: "10px 20px", 
+                borderRadius: "25px",
+                position: "fixed",
+                top: "100px",
+                right: "20px",
+                zIndex: 100,
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"
+              }}>
+          Item added to cart! 
+          <button onClick={navigateToCart}
+                  style={{
+                    marginLeft: "10px",
+                    background: "white",
+                    color: "#ff6b6b",
+                    border: "none",
+                    padding: "5px 10px",
+                    borderRadius: "15px",
+                    cursor: "pointer"
+                  }}>
+            View Cart
+          </button>
+        </div>
+      )}
+      
       <div className="carousel-wrapper">
         <div className="my-carousel" id="scroll-carousel">
           {products.map((product) => (
@@ -66,7 +109,7 @@ export default function TrendingProducts() {
                 <p>{product.price}</p>
                 <button 
                   className="shop-now-btn"
-                  onClick={(e) => handleShopNow(e, product.id)}
+                  onClick={(e) => handleShopNow(e, product)}
                 >
                   Shop Now
                 </button>

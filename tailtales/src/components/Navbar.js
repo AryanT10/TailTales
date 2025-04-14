@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { motion } from "framer-motion";
+import { useCart } from "../context/CartContext"; // Import useCart hook
 import logo from "../images/logo.png";
 
 export default function Navbar({user}) {
-
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
+  const { cart } = useCart(); // Get cart from context
 
   const navbarVariants = {
     hidden: { opacity: 0, y: -50 },
@@ -24,6 +25,9 @@ export default function Navbar({user}) {
   
     return () => unsubscribe();
   }, []);
+
+  // Calculate total quantity for cart badge
+  const cartItemCount = cart.items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <>
@@ -52,12 +56,32 @@ export default function Navbar({user}) {
         {/* Cart and Profile Buttons */}
         <motion.div className="navbar-buttons" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <motion.button
-            className="navbar-button"
+            className="navbar-button cart-button"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => navigate("/cart")}
+            style={{ position: 'relative' }}
           >
             Cart
+            {cartItemCount > 0 && (
+              <span className="cart-badge" style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                background: '#ff6b6b',
+                color: 'white',
+                borderRadius: '50%',
+                width: '20px',
+                height: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '12px',
+                fontWeight: 'bold'
+              }}>
+                {cartItemCount}
+              </span>
+            )}
           </motion.button>
           {currentUser ? (
           <motion.button
@@ -83,4 +107,3 @@ export default function Navbar({user}) {
     </>
   );
 }
-

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext"; // Import useCart hook
 import '../styles/ShopInfo.css';
 import product1 from "../images/product1.png";
 import product2 from "../images/product2.png";
@@ -13,6 +14,8 @@ import product9 from "../images/product9.png";
 
 const ShopInfo = () => {
   const navigate = useNavigate();
+  const { addItem } = useCart(); // Get addItem function from cart context
+  const [addedToCart, setAddedToCart] = useState(null);
 
   const [products] = useState([
     { id: 1, name: "Royal Canin Small Dog Food", price: "$7.80", image: product1 },
@@ -26,17 +29,53 @@ const ShopInfo = () => {
     { id: 9, name: "Ball Launcher", price: "$40", image: product9 },
   ]);
 
-  const handleAddToCart = (productId) => {
-    // In future implement actual cart functionality
-    console.log(`Added product ${productId} to cart`);
-    // You could show a notification here
+  const handleAddToCart = (product) => {
+    // Add the product to cart
+    addItem(product);
+    
+    // Show "Added to cart" message
+    setAddedToCart(product.id);
+    setTimeout(() => setAddedToCart(null), 2000);
+  };
 
+  const navigateToCart = () => {
     navigate('/cart');
   };
 
   return (
     <div className="shop-container">
       <h2 className="shop-title">Shop Products</h2>
+      
+      {/* Cart notification */}
+      {addedToCart && (
+        <div className="cart-notification" 
+             style={{
+                background: "#ff6b6b", 
+                color: "white", 
+                padding: "10px 20px", 
+                borderRadius: "25px",
+                position: "fixed",
+                top: "100px",
+                right: "20px",
+                zIndex: 100,
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"
+              }}>
+          Item added to cart! 
+          <button onClick={navigateToCart}
+                  style={{
+                    marginLeft: "10px",
+                    background: "white",
+                    color: "#ff6b6b",
+                    border: "none",
+                    padding: "5px 10px",
+                    borderRadius: "15px",
+                    cursor: "pointer"
+                  }}>
+            View Cart
+          </button>
+        </div>
+      )}
+      
       <div className="product-grid">
         {products.map((product) => (
           <div key={product.id} className="product-card-component">
@@ -49,7 +88,7 @@ const ShopInfo = () => {
             <p className="product-price">{product.price}</p>
             <button 
               className="product-action-button" 
-              onClick={() => handleAddToCart(product.id)}
+              onClick={() => handleAddToCart(product)}
             >
               Add to Cart
             </button>

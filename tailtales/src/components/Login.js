@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../services/firebase";
 import ContactLink from './ContactLink';
-import "../styles/Login.css"; // We'll create this stylesheet
+import "../styles/Login.css";
 
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function Login({ onLogin }) {
   // Check if we have a redirect path in the state
   const from = location.state?.from || "/profile";
   
-  const handleGoogleLogin = async () => {
+  const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -46,7 +46,7 @@ export default function Login({ onLogin }) {
         )}
         
         <button
-          onClick={handleGoogleLogin}
+          onClick={handleLogin}
           className="google-login-button"
         >
           <span className="google-icon">
@@ -61,7 +61,7 @@ export default function Login({ onLogin }) {
         </button>
         
         <div className="login-footer">
-        <p>Need help? <ContactLink /></p>
+          <p>Need help? <ContactLink /></p>
         </div>
       </div>
       
