@@ -130,6 +130,7 @@ export default function Login({ onLogin }) {
                 }}
                 required
               />
+              {/* Removed the redundant "Forgot Password?" link that was here */}
             </div>
             <button
               type="submit"
@@ -194,6 +195,20 @@ export default function Login({ onLogin }) {
         
         <div className="login-footer">
           <p>Need help? <ContactLink /></p>
+          <p style={{ marginTop: "10px" }}>
+            <a 
+              href="/reset-password" 
+              onClick={(e) => { e.preventDefault(); navigate("/reset-password"); }}
+              style={{ 
+                color: "#ff6b6b", 
+                textDecoration: "none",
+                fontWeight: "500",
+                display: "inline-block"
+              }}
+            >
+              Forgot Password?
+            </a>
+          </p>
         </div>
       </div>
       
