@@ -12,6 +12,7 @@ import BlogSection from './components/BlogSection';
 import SignupSection from './components/SignupSection';
 import Footer from './components/Footer';
 import Login from './components/Login';
+import Registration from './components/Registration'; // Import the new Registration component
 import ProfilePage from './components/ProfilePage';
 import OurStory from './components/OurStory';
 import ShopInfo from './components/ShopInfo';
@@ -177,6 +178,7 @@ export default function App() {
 
             {/* Authentication Routes */}
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/register" element={<Registration onLogin={handleLogin} />} /> {/* Add new Registration route */}
             <Route path="/logout-confirmation" element={<LogoutConfirmation />} />
 
             {/* Fallback for unknown routes */}
