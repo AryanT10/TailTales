@@ -52,7 +52,17 @@ export default function Login({ onLogin }) {
       navigate(from);
     } catch (error) {
       console.error("Email login failed:", error);
-      setLoginError("Login failed: " + (error.message || "Please check your credentials"));
+      
+      // More user-friendly error messages
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
+        setLoginError("Invalid email or password. Please try again.");
+      } else if (error.code === 'auth/user-not-found') {
+        setLoginError("No account found with this email. Please sign up first.");
+      } else if (error.code === 'auth/too-many-requests') {
+        setLoginError("Too many failed login attempts. Please try again later or reset your password.");
+      } else {
+        setLoginError("Login failed. Please check your credentials and try again.");
+      }
     }
   };
 
