@@ -1,7 +1,6 @@
 import React from 'react';
 import blog1 from "../images/blog1.jpg";
 import blog2 from "../images/blog2.jpg";
-import blog3 from "../images/blog3.jpg";
 import { useParams, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import '../styles/BlogPost.css';
@@ -42,24 +41,6 @@ export default function BlogPost() {
         "Finally, don't underestimate the value of simple companionship. Sometimes the best activity is just spending quiet time together, reinforcing the special connection you share with your furry friend."
       ],
       tags: ["Pet Activities", "Play", "Exercise"]
-    },
-    "3": {
-      title: "Fun Activities for Your Pet",
-      author: "Alex Thompson",
-      date: "April 8, 2025",
-      image: blog3,
-      content: [
-        "Proper nutrition is the foundation of your pet's health and well-being. Just like humans, animals require a balanced diet with the right combination of proteins, carbohydrates, fats, vitamins, and minerals to thrive. Understanding your pet's specific nutritional needs is essential for their long-term health.",
-        "Proteins are particularly important for pets, especially for cats who are obligate carnivores. High-quality animal proteins should be the first ingredient in your pet's food. For dogs, while they can digest some plant materials, animal proteins are still crucial for muscle development and maintenance.",
-        "Fats often get a bad reputation, but they're essential for your pet's diet. They provide energy, help absorb certain vitamins, and contribute to skin and coat health. Look for foods with named fat sources like chicken fat or fish oil rather than generic 'animal fats.'",
-        "Carbohydrates provide energy and fiber for your pet. While cats have minimal carbohydrate requirements, dogs can benefit from moderate amounts of digestible carbohydrates like rice or sweet potatoes. However, be cautious of foods with excessive fillers like corn or wheat gluten.",
-        "Water is perhaps the most overlooked nutrient. Ensure your pet always has access to fresh, clean water. Some pets, particularly cats, may not drink enough water naturally, so consider adding wet food to their diet to increase moisture intake.",
-        "Age-specific formulations are important as your pet's nutritional needs change throughout their life. Puppies and kittens need more calories and nutrients for growth, while senior pets often need fewer calories but more of certain nutrients to support aging bodies.",
-        "Remember that every pet is unique. Factors like breed, size, activity level, and health conditions all affect nutritional requirements. What works for one pet may not be ideal for another. Consult with your veterinarian to create a nutrition plan tailored to your pet's specific needs.",
-        "By investing in quality nutrition today, you're helping to prevent health problems and veterinary expenses tomorrow, while ensuring your furry friend enjoys a happier, more active life."
-      ],
-      tags: ["Pet Nutrition", "Health", "Diet"],
-      relatedPosts: [1, 4]
     }
   };
   
