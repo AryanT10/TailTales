@@ -16,6 +16,7 @@ import './App.css'
 import ShopInfo from './components/ShopInfo'
 import ProfilePage from './components/ProfilePage';
 import CheckAppointment from './components/CheckAppointment';
+import BookAppointment from './components/BookAppointment';
 import Contact from './components/Contact';
 import LogoutConfirmation from './components/LogoutConfirmation';
 // authentication state
@@ -73,6 +74,7 @@ export default function App() {
             <Route path="/blog/:id" element={<BlogPost />} />
             {/* Contact Page Route */}
             <Route path="/contact" element={<Contact />} />
+            
             {/* Protected Route for Check Appointment */}
             <Route 
               path="/check-appointment" 
@@ -80,6 +82,14 @@ export default function App() {
                 <ProtectedRoute user={user}>
                   <CheckAppointment user={user} />
                 </ProtectedRoute>
+              } 
+            />
+            
+            {/* New Route for Book Appointment */}
+            <Route 
+              path="/book-appointment" 
+              element={
+                <BookAppointment user={user} />
               } 
             />
             
