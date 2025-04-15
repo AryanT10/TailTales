@@ -1,0 +1,211 @@
+/* src/styles/RescheduleModal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .modal-header {
+    background: linear-gradient(to right, #fff5f5, #fff9f0);
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .modal-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 22px;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s;
+  }
+  
+  .close-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .current-appointment-info {
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid #ff6b6b;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+  }
+  
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .time-slot {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .time-slot:hover {
+    border-color: #ff6b6b;
+    background: #fff5f5;
+  }
+  
+  .time-slot.selected {
+    background: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+  }
+  
+  .time-slot.disabled {
+    background: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #eee;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+  }
+  
+  .cancel-button,
+  .save-button {
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cancel-button {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .cancel-button:hover {
+    background-color: #e5e5e5;
+  }
+  
+  .save-button {
+    background-color: #ff6b6b;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.25);
+  }
+  
+  .save-button:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+  }
+  
+  .save-button:disabled,
+  .cancel-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .modal-content {
+      max-width: 100%;
+    }
+    
+    .time-slots {
+      gap: 8px;
+    }
+    
+    .time-slot {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+    
+    .cancel-button, 
+    .save-button {
+      width: 100%;
+    }
+  }

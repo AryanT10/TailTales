@@ -1,5 +1,7 @@
+// src/components/BookAppointment.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AppointmentService from "../services/AppointmentService"; // Import the AppointmentService
 import "../styles/BookAppointment.css";
 
 export default function BookAppointment({ user }) {
@@ -7,6 +9,8 @@ export default function BookAppointment({ user }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userPets, setUserPets] = useState([]);
+  const [selectedPetId, setSelectedPetId] = useState(null);
   
   // Form state
   const [serviceType, setServiceType] = useState("");
@@ -102,6 +106,21 @@ export default function BookAppointment({ user }) {
     ]
   };
   
+  // Load user pets from localStorage on component mount
+  useEffect(() => {
+    if (user) {
+      const savedPets = localStorage.getItem('userPets');
+      if (savedPets) {
+        try {
+          const parsedPets = JSON.parse(savedPets);
+          setUserPets(parsedPets[user.uid] || []);
+        } catch (error) {
+          console.error("Error parsing saved pets:", error);
+        }
+      }
+    }
+  }, [user]);
+  
   // Time slots
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   
@@ -134,6 +153,20 @@ export default function BookAppointment({ user }) {
     }
   }, [user, navigate, loading]);
   
+  // Handle pet selection
+  const handlePetSelect = (petId) => {
+    setSelectedPetId(petId);
+    
+    // Find the selected pet and update the form fields
+    const selectedPet = userPets.find(pet => pet.id === petId);
+    if (selectedPet) {
+      setPetName(selectedPet.name);
+      setPetType(selectedPet.type.toLowerCase() + 's'); // Convert to plural form for compatibility
+      setPetAge(selectedPet.age);
+      setPetBreed(selectedPet.breed);
+    }
+  };
+
   // Handle service type selection
   const handleServiceTypeSelect = (type) => {
     setServiceType(type);
@@ -162,11 +195,31 @@ export default function BookAppointment({ user }) {
     e.preventDefault();
     setLoading(true);
     
-    // Here you would typically make an API call to save the appointment
-    setTimeout(() => {
-      setSubmitted(true);
+    // Create the appointment object
+    const appointmentData = {
+      service: selectedService,
+      petName: petName,
+      petType: petType.replace('s', ''), // Convert back to singular form
+      petBreed: petBreed,
+      date: appointmentDate,
+      time: appointmentTime,
+      price: selectedService.price,
+      specialInstructions: specialInstructions,
+    };
+    
+    try {
+      // Save appointment using the AppointmentService
+      AppointmentService.saveAppointment(user.uid, appointmentData);
+      
+      setTimeout(() => {
+        setSubmitted(true);
+        setLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.error("Error saving appointment:", error);
       setLoading(false);
-    }, 1500);
+      // Here you could add error handling UI
+    }
   };
   
   // Reset form and start over
@@ -174,6 +227,7 @@ export default function BookAppointment({ user }) {
     setCurrentStep(1);
     setServiceType("");
     setSelectedService(null);
+    setSelectedPetId(null);
     setPetType("");
     setPetName("");
     setPetAge("");
@@ -294,6 +348,33 @@ export default function BookAppointment({ user }) {
             {currentStep === 2 && (
               <div className="appointment-form-section">
                 <h3>Step 2: Pet Information</h3>
+                
+                {/* Pet Selection Section */}
+                {userPets.length > 0 && (
+                  <div className="pet-selection-section">
+                    <h4>Select from your pets</h4>
+                    <div className="pet-selection-list">
+                      {userPets.map((pet) => (
+                        <div 
+                          key={pet.id}
+                          className={`pet-selection-item ${selectedPetId === pet.id ? 'selected' : ''}`}
+                          onClick={() => handlePetSelect(pet.id)}
+                        >
+                          <div className="pet-avatar">
+                            {pet.type.charAt(0)}
+                          </div>
+                          <div className="pet-info">
+                            <span className="pet-name">{pet.name}</span>
+                            <span className="pet-details">{pet.type} • {pet.age}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="or-divider">
+                      <span>OR</span>
+                    </div>
+                  </div>
+                )}
                 
                 <div className="appointment-form-row">
                   <div className="form-group">
@@ -443,7 +524,7 @@ export default function BookAppointment({ user }) {
                     
                     <div className="summary-item">
                       <span className="summary-label">Pet:</span>
-                      <span className="summary-value">{petName} ({petType})</span>
+                      <span className="summary-value">{petName} ({petType.replace('s', '')})</span>
                     </div>
                     
                     <div className="summary-item">
@@ -502,7 +583,7 @@ export default function BookAppointment({ user }) {
               
               <div className="summary-item">
                 <span className="summary-label">Pet:</span>
-                <span className="summary-value">{petName} ({petType})</span>
+                <span className="summary-value">{petName} ({petType.replace('s', '')})</span>
               </div>
               
               <div className="summary-item">

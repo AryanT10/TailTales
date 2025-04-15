@@ -1,0 +1,37 @@
+/* Updated Appointment Summary */
+.appointment-summary {
+    background: #FFF4F2;  /* Changed from gradient to solid color */
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 30px;
+    border: 1px solid #e0e0e0;  /* Light grey border all around */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.summary-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed #ffcaca;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.summary-value {
+    color: #333;
+    font-weight: 600;
+}

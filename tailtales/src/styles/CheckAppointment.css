@@ -1,154 +1,307 @@
 .check-appointment-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 70vh;
-    background: linear-gradient(to bottom, #fff6f6, #fff5e1);
-    font-family: "Quicksand", "Poppins", sans-serif;
-    padding: 60px 20px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 70vh;
+  background: linear-gradient(to bottom, #fff6f6, #fff5e1);
+  font-family: "Quicksand", "Poppins", sans-serif;
+  padding: 60px 20px;
+}
+
+.check-appointment-container {
+  max-width: 800px;
+  width: 100%;
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Decorative elements */
+.check-appointment-container::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 107, 107, 0.1), transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.check-appointment-container::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 175, 107, 0.08), transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Main Heading */
+.check-appointment-container h2 {
+  font-size: 34px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.check-appointment-container h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: #ff6b6b;
+  border-radius: 2px;
+}
+
+.check-appointment-welcome {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.appointment-list-container {
+  margin: 30px auto;
+  background: linear-gradient(to right, #fff5f5, #fff9f0);
+  padding: 40px;
+  border-radius: 15px;
+  border-left: 4px solid #ff6b6b;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.appointment-list-container p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.book-new-appointment-btn {
+  background: linear-gradient(to right, #ff6b6b, #ff8e8e);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+.book-new-appointment-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+/* Optional paw print decoration */
+.paw-decoration {
+  position: absolute;
+  color: rgba(255, 107, 107, 0.1);
+  font-size: 40px;
+  z-index: 0;
+}
+
+.paw-1 {
+  top: 20px;
+  right: 30px;
+  transform: rotate(20deg);
+}
+
+.paw-2 {
+  bottom: 20px;
+  left: 30px;
+  transform: rotate(-15deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .check-appointment-container {
-    max-width: 800px;
-    width: 100%;
-    background: white;
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
+    padding: 30px 20px;
   }
-  
-  /* Decorative elements */
-  .check-appointment-container::before {
-    content: "";
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(255, 107, 107, 0.1), transparent 70%);
-    border-radius: 50%;
-    z-index: 0;
-  }
-  
-  .check-appointment-container::after {
-    content: "";
-    position: absolute;
-    bottom: -50px;
-    left: -50px;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(255, 175, 107, 0.08), transparent 70%);
-    border-radius: 50%;
-    z-index: 0;
-  }
-  
-  /* Main Heading */
+
   .check-appointment-container h2 {
-    font-size: 34px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    position: relative;
-    padding-bottom: 15px;
+    font-size: 28px;
   }
-  
-  .check-appointment-container h2::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 4px;
-    background: #ff6b6b;
-    border-radius: 2px;
-  }
-  
+
   .check-appointment-welcome {
-    font-size: 18px;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 40px;
-  }
-  
-  .appointment-list-container {
-    margin: 30px auto;
-    background: linear-gradient(to right, #fff5f5, #fff9f0);
-    padding: 40px;
-    border-radius: 15px;
-    border-left: 4px solid #ff6b6b;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  }
-  
-  .appointment-list-container p {
-    color: #666;
     font-size: 16px;
-    margin-bottom: 25px;
   }
-  
+
+  .appointment-list-container {
+    padding: 30px 20px;
+  }
+
   .book-new-appointment-btn {
-    background: linear-gradient(to right, #ff6b6b, #ff8e8e);
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    font-size: 16px;
+    padding: 12px 25px;
   }
-  
-  .book-new-appointment-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+/* Additional styles for appointment dashboard in CheckAppointment.css */
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.appointment-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #fff5f5, #fff9f0);
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.appointment-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.appointment-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.appointment-status.confirmed {
+  background-color: #e6f7e6;
+  color: #2e7d32;
+}
+
+.appointment-status.pending {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.appointment-status.cancelled {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.appointment-details {
+  padding: 20px;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #666;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  color: #333;
+}
+
+.appointment-actions {
+  display: flex;
+  padding: 0 20px 20px;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.appointment-action-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.appointment-action-btn.edit {
+  background-color: #e0f2f1;
+  color: #00796b;
+}
+
+.appointment-action-btn.edit:hover {
+  background-color: #00796b;
+  color: white;
+}
+
+.appointment-action-btn.cancel {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.appointment-action-btn.cancel:hover {
+  background-color: #c62828;
+  color: white;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 107, 107, 0.2);
+  border-radius: 50%;
+  border-top-color: #ff6b6b;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  /* Optional paw print decoration */
-  .paw-decoration {
-    position: absolute;
-    color: rgba(255, 107, 107, 0.1);
-    font-size: 40px;
-    z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .appointment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
-  
-  .paw-1 {
-    top: 20px;
-    right: 30px;
-    transform: rotate(20deg);
+
+  .appointment-status {
+    align-self: flex-start;
   }
-  
-  .paw-2 {
-    bottom: 20px;
-    left: 30px;
-    transform: rotate(-15deg);
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .check-appointment-container {
-      padding: 30px 20px;
-    }
-    
-    .check-appointment-container h2 {
-      font-size: 28px;
-    }
-    
-    .check-appointment-welcome {
-      font-size: 16px;
-    }
-    
-    .appointment-list-container {
-      padding: 30px 20px;
-    }
-    
-    .book-new-appointment-btn {
-      font-size: 16px;
-      padding: 12px 25px;
-    }
-  }
+}
