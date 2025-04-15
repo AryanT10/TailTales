@@ -1,3 +1,4 @@
+// src/components/ProfilePage.js
 import React, { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../services/firebase";
@@ -50,6 +51,17 @@ export default function ProfilePage({ user, onLogout }) {
       .join("")
       .toUpperCase()
       .substring(0, 2);
+  };
+
+  // Get display name or extract username from email
+  const getDisplayName = () => {
+    if (user.displayName) {
+      return user.displayName;
+    } else if (user.email) {
+      // Extract the part before @ from the email
+      return user.email.split('@')[0];
+    }
+    return "User";
   };
   
   const handleLogout = async () => {
@@ -109,6 +121,9 @@ export default function ProfilePage({ user, onLogout }) {
     day: 'numeric'
   });
 
+  // Use the new function to get the display name
+  const displayName = getDisplayName();
+
   return (
     <div className="profile-page">
       <div className="profile-container">
@@ -118,7 +133,7 @@ export default function ProfilePage({ user, onLogout }) {
         
         <h1>My Profile</h1>
         <p className="profile-welcome">
-          Welcome back, {user.displayName}! Manage your account and pet care journey from here.
+          Welcome back, {displayName}! Manage your account and pet care journey from here.
         </p>
 
         <div className="profile-content">
@@ -133,11 +148,11 @@ export default function ProfilePage({ user, onLogout }) {
                 />
               ) : (
                 <div className="profile-avatar-fallback">
-                  {getInitials(user.displayName)}
+                  {getInitials(displayName)}
                 </div>
               )}
             </div>
-            <h2>{user.displayName}</h2>
+            <h2>{displayName}</h2>
             <div className="profile-info-item">
               <span className="info-label">Email:</span>
               <span className="info-value">{user.email}</span>
