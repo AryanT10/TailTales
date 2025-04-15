@@ -8,6 +8,7 @@ import CartPage from './components/CartPage'
 import TrendingProducts from './components/TrendingProducts'
 import AppointmentSection from './components/AppointmentSection'
 import BlogSection from './components/BlogSection'
+import BlogPost from './components/BlogPost'
 import SignupSection from './components/SignupSection'
 import Footer from './components/Footer'
 import OurStory from './components/OurStory'
@@ -68,6 +69,8 @@ export default function App() {
             <Route path="/shop" element={<ShopInfo />} />
             {/* Move OurStory to a Separate Route */}
             <Route path="/our-story" element={<OurStory />} />
+            {/* Blog Post Route */}
+            <Route path="/blog/:id" element={<BlogPost />} />
             {/* Contact Page Route */}
             <Route path="/contact" element={<Contact />} />
             {/* Protected Route for Check Appointment */}
