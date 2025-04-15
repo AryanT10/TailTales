@@ -1,3 +1,4 @@
+// Modified Navbar.js file
 import React from "react";
 import "../styles/Navbar.css";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +64,8 @@ export default function Navbar({user}) {
             style={{ position: 'relative' }}
           >
             Cart
-            {cartItemCount > 0 && (
+            {/* Only show cart badge when user is logged in */}
+            {user && cartItemCount > 0 && (
               <span className="cart-badge" style={{
                 position: 'absolute',
                 top: '-8px',
@@ -84,24 +86,24 @@ export default function Navbar({user}) {
             )}
           </motion.button>
           {currentUser ? (
-          <motion.button
-            className="navbar-button"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => navigate("/profile")}
-          >
-            Profile
-          </motion.button>
-        ) : (
-          <motion.button
-            className="navbar-button"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => navigate("/login")} // Navigates to login page first
-          >
-            Login
-          </motion.button>
-        )}
+            <motion.button
+              className="navbar-button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate("/profile")}
+            >
+              Profile
+            </motion.button>
+          ) : (
+            <motion.button
+              className="navbar-button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate("/login")} // Navigates to login page first
+            >
+              Login
+            </motion.button>
+          )}
         </motion.div>
       </motion.nav>
     </>
