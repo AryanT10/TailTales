@@ -12,7 +12,7 @@ import product7 from "../images/product7.png";
 import product8 from "../images/product8.png";
 import product9 from "../images/product9.png";
 
-const ShopInfo = () => {
+const ShopInfo = ({ user }) => { // Add user prop
   const navigate = useNavigate();
   const { addItem } = useCart(); // Get addItem function from cart context
   const [addedToCart, setAddedToCart] = useState(null);
@@ -30,7 +30,14 @@ const ShopInfo = () => {
   ]);
 
   const handleAddToCart = (product) => {
-    // Add the product to cart
+    // Check if user is logged in
+    if (!user) {
+      // If not logged in, redirect to login page with return path
+      navigate("/login", { state: { from: "/shop" } });
+      return;
+    }
+    
+    // User is logged in, add to cart
     addItem(product);
     
     // Show "Added to cart" message

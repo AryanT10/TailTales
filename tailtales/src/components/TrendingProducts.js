@@ -16,7 +16,7 @@ import product9 from "../images/product9.png";
 
 import "../styles/TrendingProducts.css";
 
-export default function TrendingProducts() {
+export default function TrendingProducts({ user }) { // Add user prop
   const navigate = useNavigate();
   const { addItem } = useCart(); // Get addItem function from cart context
   const [addedToCart, setAddedToCart] = useState(null);
@@ -49,7 +49,14 @@ export default function TrendingProducts() {
   const handleShopNow = (e, product) => {
     e.stopPropagation();
     
-    // Add to cart
+    // Check if user is logged in
+    if (!user) {
+      // If not logged in, redirect to the shop page instead of adding to cart
+      navigate("/shop");
+      return;
+    }
+    
+    // User is logged in, add to cart
     addItem(product);
     
     // Show notification

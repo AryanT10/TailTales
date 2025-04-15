@@ -120,7 +120,7 @@ export default function App() {
               element={
                 <>
                   <HeroSection />
-                  <TrendingProducts />
+                  <TrendingProducts user={user} />
                   <AppointmentSection />
                   <BlogSection />
                   <SignupSection />
@@ -130,7 +130,7 @@ export default function App() {
             />
 
             {/* Shop Page */}
-            <Route path="/shop" element={<ShopInfo />} />
+            <Route path="/shop" element={<ShopInfo user={user} />} />
             
             {/* Our Story Page */}
             <Route path="/our-story" element={<OurStory />} />
