@@ -5,6 +5,10 @@ import { useCart } from "../services/CartContext"; // Import useCart hook
 import "../styles/services/CartPage.css";
 
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'https://your-backend.vercel.app' // use actual deployed backend URL
+  : 'http://localhost:4243';
+
 export default function CartPage({ user }) {
 
   const [cartItems, setCartItems] = useState([]);
@@ -41,16 +45,10 @@ export default function CartPage({ user }) {
 
   const handleCheckout = async () => {
     try {
-      // Clean the prices first (remove $ and ensure number)
-      const cleanedCartItems = cart.items.map((item) => ({
-        ...item,
-        price: parseFloat(item.price.replace("$", "")) || 0,
-      }));
-  
-      const response = await fetch('https://tail-tales-backend.onrender.com/create-checkout', {
+      const response = await fetch(`${API_BASE_URL}/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cartItems: cleanedCartItems, userId: user.uid }),
+        body: JSON.stringify({ cartItems: cart.items, userId: user.uid }),
       });
   
       const data = await response.json();
