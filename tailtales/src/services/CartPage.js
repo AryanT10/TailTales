@@ -6,7 +6,7 @@ import "../styles/services/CartPage.css";
 
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://your-backend.vercel.app' // use actual deployed backend URL
+  ? 'https://tail-tales-backend.onrender.com'
   : 'http://localhost:4243';
 
 export default function CartPage({ user }) {
