@@ -2,21 +2,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../services/firebase";
+import { auth, app } from "../../services/firebase";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import ContactLink from './ContactLink';
 import "../../styles/users/Login.css";
+
 
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const db = getFirestore(app); // Initialised firestore
+  const from = location.state?.from || "/profile";
+
+
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showEmailLogin, setShowEmailLogin] = useState(false);
   const [loginError, setLoginError] = useState("");
   
-  // Check if we have a redirect path in the state
-  const from = location.state?.from || "/profile";
+  
   
   // Check if we have an email and message from state (from SignupSection redirect)
   useEffect(() => {
@@ -27,12 +32,44 @@ export default function Login({ onLogin }) {
       setMessage(location.state.message);
     }
   }, [location.state]);
+
+  const saveUserToFirestore = async (user) => {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, {
+        uid: user.uid,
+        name: user.displayName || "",
+        email: user.email,
+        photoURL: user.photoURL || "",
+        createdAt: new Date().toISOString(),
+      }, { merge: true });
+    } catch (error) {
+      console.error("Error saving user to Firestore:", error);
+    }
+  };
   
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      console.log("Logged in:", user);
+
+       try {
+        const userRef = doc(db, "users", user.uid);
+        await setDoc(userRef, {
+          uid: user.uid,
+          name: user.displayName || "",
+          email: user.email,
+          photoURL: user.photoURL || "",
+          createdAt: new Date().toISOString(),
+        }, { merge: true });
+  
+        console.log("✅ User saved to Firestore");
+      } catch (firestoreErr) {
+        console.warn("⚠️ Failed to save user to Firestore:", firestoreErr);
+      }
+
       onLogin(user);
       navigate(from); // Redirect to the original requested page
     } catch (error) {
@@ -48,6 +85,8 @@ export default function Login({ onLogin }) {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const user = result.user;
+      await saveUserToFirestore(user);
+
       onLogin(user);
       navigate(from);
     } catch (error) {

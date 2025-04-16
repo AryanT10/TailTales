@@ -1,7 +1,9 @@
 // src/components/ProfilePage.js
 import React, { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../../services/firebase";
+import { auth, app } from "../../services/firebase";
+import { collection, getDocs, getFirestore,updateDoc, deleteDoc, doc } from "firebase/firestore";
+import AppointmentService from "../../services/AppointmentService";
 import { useNavigate } from "react-router-dom";
 import "../../styles/users/ProfilePage.css";
 import AddPetForm from '../appoint/AddPetForm'; // Import the AddPetForm component
@@ -9,34 +11,54 @@ import EditPetForm from '../appoint/EditPetForm'; // Import the EditPetForm comp
 
 export default function ProfilePage({ user, onLogout }) {
   const navigate = useNavigate();
+  const db = getFirestore(app);
   const [imageError, setImageError] = useState(false);
+  const [recentAppointment, setRecentAppointment] = useState(null);
+
   // Pet management state variables
   const [showAddPetForm, setShowAddPetForm] = useState(false);
   const [editingPet, setEditingPet] = useState(null);
   const [pets, setPets] = useState([]);
   
-  // Load pets from localStorage on component mount
   useEffect(() => {
-    const savedPets = localStorage.getItem('userPets');
-    if (savedPets && user) {
+
+    
+
+    const fetchPets = async () => {
+      if (user) {
+        try {
+          const petsRef = collection(db, 'users', user.uid, 'pets');
+          const snapshot = await getDocs(petsRef);
+          const petList = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setPets(petList);
+        } catch (err) {
+          console.error("Failed to load pets from Firestore:", err);
+        }
+      }
+    };
+  
+    fetchPets();
+  }, [user]);
+
+  const fetchRecentAppointment = async () => {
+    if (user?.uid) {
       try {
-        const parsedPets = JSON.parse(savedPets);
-        setPets(parsedPets[user.uid] || []);
+        const allAppointments = await AppointmentService.getAppointments(user.uid);
+        if (allAppointments.length > 0) {
+          const sorted = allAppointments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setRecentAppointment(sorted[0]);
+        }
       } catch (error) {
-        console.error("Error parsing saved pets:", error);
+        console.error("Failed to fetch recent appointment:", error);
       }
     }
-  }, [user]);
+  };
   
-  // Save pets to localStorage when they change
-  useEffect(() => {
-    if (user && pets.length > 0) {
-      const savedPets = JSON.parse(localStorage.getItem('userPets') || '{}');
-      savedPets[user.uid] = pets;
-      localStorage.setItem('userPets', JSON.stringify(savedPets));
-    }
-  }, [pets, user]);
-  
+  fetchRecentAppointment();
+
   // Handle image loading error
   const handleImageError = () => {
     setImageError(true);
@@ -96,19 +118,38 @@ export default function ProfilePage({ user, onLogout }) {
   };
   
   // Handle updating an existing pet
-  const handleUpdatePet = (updatedPet) => {
-    const updatedPets = pets.map(pet => 
-      pet.id === updatedPet.id ? updatedPet : pet
-    );
-    setPets(updatedPets);
-    setEditingPet(null);
+  const handleUpdatePet = async (updatedPet) => {
+    try {
+      const petRef = doc(db, 'users', user.uid, 'pets', updatedPet.id);
+      await updateDoc(petRef, {
+        name: updatedPet.name,
+        type: updatedPet.type,
+        age: updatedPet.age,
+        breed: updatedPet.breed,
+      });
+  
+      const updatedPets = pets.map((pet) =>
+        pet.id === updatedPet.id ? updatedPet : pet
+      );
+      setPets(updatedPets);
+      setEditingPet(null);
+      console.log("Pet updated in Firestore");
+    } catch (error) {
+      console.error(" Error updating pet:", error);
+    }
   };
   
   // Handle deleting a pet
-  const handleDeletePet = (petId) => {
+  const handleDeletePet = async (petId) => {
     if (window.confirm("Are you sure you want to remove this pet?")) {
-      const updatedPets = pets.filter(pet => pet.id !== petId);
-      setPets(updatedPets);
+      try {
+        await deleteDoc(doc(db, 'users', user.uid, 'pets', petId));
+        const updatedPets = pets.filter(pet => pet.id !== petId);
+        setPets(updatedPets);
+        console.log("Pet deleted from Firestore");
+      } catch (err) {
+        console.error("Error deleting pet:", err);
+      }
     }
   };
 
@@ -207,9 +248,27 @@ export default function ProfilePage({ user, onLogout }) {
 
         <div className="profile-card recent-activity">
           <h3>Recent Activity</h3>
-          <div className="activity-empty">
+            {recentAppointment ? (
+            <div className="recent-appointment-summary">
+            <strong>{recentAppointment.service.name}</strong> for <strong>{recentAppointment.petName}</strong><br />
+            on{" "}
+            {new Date(recentAppointment.date).toLocaleDateString(undefined, {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+              })}{" "}
+              at {recentAppointment.time}
+              <br />
+              <span className={`status-badge ${recentAppointment.status.toLowerCase()}`}>
+                Status: {recentAppointment.status}
+              </span>
+            </div>
+          ) : (
+            <div className="activity-empty">
             <p>No recent activities to display.</p>
-          </div>
+    </div>
+  )}
         </div>
 
         <div className="profile-card pet-profiles">
@@ -223,7 +282,8 @@ export default function ProfilePage({ user, onLogout }) {
                 </div>
               ) : (
                 <div className="pet-list">
-                  {pets.map(pet => (
+                  {/* eslint-disable-next-line no-unused-vars */}
+                  {pets.map((pet) => (
                     <div key={pet.id} className="pet-item">
                       <div>
                         <h4>{pet.name}</h4>

@@ -1,12 +1,17 @@
 // src/components/CheckAppointment.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AppointmentService from "../../services/AppointmentService"; // Import the AppointmentService
+import { collection, getDocs, getFirestore, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { app } from "../../services/firebase";
 import RescheduleModal from "./RescheduleModal"; // Import the new RescheduleModal component
 import "../../styles/appoint/CheckAppointment.css";
 
+const db = getFirestore(app);
+
 export default function CheckAppointment({ user }) {
+
   const navigate = useNavigate();
+
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
@@ -14,23 +19,20 @@ export default function CheckAppointment({ user }) {
 
   // Load appointments from local storage using AppointmentService
   useEffect(() => {
-    if (user) {
-      setLoading(true);
-      
-      // Simulate a short loading delay for better UX
-      setTimeout(() => {
-        try {
-          // Use AppointmentService to fetch user appointments
-          const userAppointments = AppointmentService.getAppointments(user.uid);
-          console.log("Fetched appointments:", userAppointments);
-          setAppointments(userAppointments);
-        } catch (error) {
-          console.error("Error loading appointments:", error);
-        } finally {
-          setLoading(false);
-        }
-      }, 1000);
-    }
+    const fetchAppointments = async () => {
+      try {
+        const ref = collection(db, "users", user.uid, "appointments");
+        const snapshot = await getDocs(ref);
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setAppointments(data);
+      } catch (error) {
+        console.error("Error loading appointments from Firestore:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) fetchAppointments();
   }, [user]);
 
   const handleBookAppointment = () => {
@@ -48,44 +50,34 @@ export default function CheckAppointment({ user }) {
     setShowRescheduleModal(true);
   };
 
-  const handleCancelAppointment = (appointmentId) => {
+  const handleCancelAppointment = async (appointmentId) => {
     if (window.confirm("Are you sure you want to cancel this appointment?")) {
       try {
-        // Cancel the appointment
-        AppointmentService.cancelAppointment(user.uid, appointmentId);
-        
-        // Refresh the appointments list
-        const updatedAppointments = AppointmentService.getAppointments(user.uid);
-        setAppointments(updatedAppointments);
+        const ref = doc(db, "users", user.uid, "appointments", appointmentId);
+        await updateDoc(ref, { status: "Cancelled" });
+        setAppointments((prev) => prev.map(appt => appt.id === appointmentId ? { ...appt, status: "Cancelled" } : appt));
       } catch (error) {
         console.error("Error cancelling appointment:", error);
-        alert("There was an error cancelling your appointment. Please try again.");
       }
     }
   };
 
   // Handle appointment deletion
-  const handleDeleteAppointment = (appointmentId) => {
+  const handleDeleteAppointment = async (appointmentId) => {
     if (window.confirm("Are you sure you want to permanently delete this appointment?")) {
       try {
-        // Delete the appointment
-        AppointmentService.deleteAppointment(user.uid, appointmentId);
-        
-        // Refresh the appointments list
-        const updatedAppointments = AppointmentService.getAppointments(user.uid);
-        setAppointments(updatedAppointments);
+        const ref = doc(db, "users", user.uid, "appointments", appointmentId);
+        await deleteDoc(ref);
+        setAppointments((prev) => prev.filter(appt => appt.id !== appointmentId));
       } catch (error) {
         console.error("Error deleting appointment:", error);
-        alert("There was an error deleting your appointment. Please try again.");
       }
     }
   };
 
   // Handle appointment rescheduling
   const handleRescheduleComplete = (appointmentId, updates) => {
-    // Refresh appointments after rescheduling
-    const updatedAppointments = AppointmentService.getAppointments(user.uid);
-    setAppointments(updatedAppointments);
+    setAppointments((prev) => prev.map(appt => appt.id === appointmentId ? { ...appt, ...updates } : appt));
   };
 
   // Redirect to login if not authenticated

@@ -1,11 +1,16 @@
 // src/components/BookAppointment.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AppointmentService from "../../services/AppointmentService"; // Import the AppointmentService
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { app } from "../../services/firebase";
 import "../../styles/appoint/BookAppointment.css";
 
+const db = getFirestore(app);
+
 export default function BookAppointment({ user }) {
+
   const navigate = useNavigate();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -109,15 +114,21 @@ export default function BookAppointment({ user }) {
   // Load user pets from localStorage on component mount
   useEffect(() => {
     if (user) {
-      const savedPets = localStorage.getItem('userPets');
-      if (savedPets) {
+      const fetchPets = async () => {
         try {
-          const parsedPets = JSON.parse(savedPets);
-          setUserPets(parsedPets[user.uid] || []);
+          const petsRef = collection(db, "users", user.uid, "pets");
+          const snapshot = await getDocs(petsRef);
+          const pets = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setUserPets(pets);
         } catch (error) {
-          console.error("Error parsing saved pets:", error);
+          console.error("Error fetching pets from Firestore:", error);
         }
-      }
+      };
+  
+      fetchPets();
     }
   }, [user]);
   
@@ -156,12 +167,11 @@ export default function BookAppointment({ user }) {
   // Handle pet selection
   const handlePetSelect = (petId) => {
     setSelectedPetId(petId);
-    
     // Find the selected pet and update the form fields
     const selectedPet = userPets.find(pet => pet.id === petId);
     if (selectedPet) {
       setPetName(selectedPet.name);
-      setPetType(selectedPet.type.toLowerCase() + 's'); // Convert to plural form for compatibility
+      setPetType(selectedPet.type.toLowerCase() + 's');
       setPetAge(selectedPet.age);
       setPetBreed(selectedPet.breed);
     }
@@ -191,26 +201,28 @@ export default function BookAppointment({ user }) {
   };
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
-    // Create the appointment object
+  
     const appointmentData = {
       service: selectedService,
       petName: petName,
-      petType: petType.replace('s', ''), // Convert back to singular form
+      petType: petType.replace('s', ''),
       petBreed: petBreed,
       date: appointmentDate,
       time: appointmentTime,
       price: selectedService.price,
       specialInstructions: specialInstructions,
     };
-    
+  
     try {
-      // Save appointment using the AppointmentService
-      AppointmentService.saveAppointment(user.uid, appointmentData);
-      
+      await addDoc(collection(db, 'users', user.uid, 'appointments'), {
+        ...appointmentData,
+        status: "Confirmed",
+        createdAt: new Date().toISOString()
+      });
+  
       setTimeout(() => {
         setSubmitted(true);
         setLoading(false);
@@ -218,7 +230,7 @@ export default function BookAppointment({ user }) {
     } catch (error) {
       console.error("Error saving appointment:", error);
       setLoading(false);
-      // Here you could add error handling UI
+      alert("Failed to book appointment. Try again.");
     }
   };
   
@@ -300,13 +312,13 @@ export default function BookAppointment({ user }) {
                 <div className="service-type-selector">
                   {serviceTypes.map((type) => (
                     <div
-                      key={type.id}
-                      className={`service-type-button ${serviceType === type.id ? 'active' : ''}`}
-                      onClick={() => handleServiceTypeSelect(type.id)}
-                    >
-                      <span className="service-icon">{type.icon}</span>
-                      <p>{type.name}</p>
-                    </div>
+                    key={type.id}
+                    className={`service-type-button ${serviceType === type.id ? 'active' : ''}`}
+                    onClick={() => handleServiceTypeSelect(type.id)}
+                  >
+                    <span className="service-icon">{type.icon}</span>
+                    <p>{type.name}</p>
+                  </div>
                   ))}
                 </div>
                 
@@ -356,18 +368,18 @@ export default function BookAppointment({ user }) {
                     <div className="pet-selection-list">
                       {userPets.map((pet) => (
                         <div 
-                          key={pet.id}
-                          className={`pet-selection-item ${selectedPetId === pet.id ? 'selected' : ''}`}
-                          onClick={() => handlePetSelect(pet.id)}
-                        >
-                          <div className="pet-avatar">
-                            {pet.type.charAt(0)}
-                          </div>
-                          <div className="pet-info">
-                            <span className="pet-name">{pet.name}</span>
-                            <span className="pet-details">{pet.type} • {pet.age}</span>
-                          </div>
+                        key={pet.id}
+                        className={`pet-selection-item ${selectedPetId === pet.id ? 'selected' : ''}`}
+                        onClick={() => handlePetSelect(pet.id)}
+                      >
+                        <div className="pet-avatar">
+                          {pet.type.charAt(0)}
                         </div>
+                        <div className="pet-info">
+                          <span className="pet-name">{pet.name}</span>
+                          <span className="pet-details">{pet.type} • {pet.age}</span>
+                        </div>
+                      </div>
                       ))}
                     </div>
                     <div className="or-divider">
@@ -491,12 +503,12 @@ export default function BookAppointment({ user }) {
                     <div className="time-slots">
                       {availableTimeSlots.map((slot, index) => (
                         <div
-                          key={index}
-                          className={`time-slot ${appointmentTime === slot.time ? 'selected' : ''} ${!slot.available ? 'disabled' : ''}`}
-                          onClick={() => handleTimeSlotSelect(slot)}
-                        >
-                          {slot.time}
-                        </div>
+                        key={`${slot.time}-${index}`}
+                        className={`time-slot ${appointmentTime === slot.time ? 'selected' : ''} ${!slot.available ? 'disabled' : ''}`}
+                        onClick={() => handleTimeSlotSelect(slot)}
+                      >
+                        {slot.time}
+                      </div>
                       ))}
                     </div>
                   </div>

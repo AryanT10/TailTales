@@ -46,7 +46,7 @@ const RescheduleModal = ({ appointment, onClose, onReschedule, userId }) => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!newDate || !newTime) {
@@ -65,11 +65,12 @@ const RescheduleModal = ({ appointment, onClose, onReschedule, userId }) => {
     
     try {
       // Update the appointment using AppointmentService
-      AppointmentService.updateAppointment(userId, appointment.id, updates);
+      await AppointmentService.updateAppointment(userId, appointment.id, updates);
       
       setTimeout(() => {
         setLoading(false);
         onReschedule(appointment.id, updates);
+        console.log("Appointment successfully rescheduled.");
         onClose();
       }, 1000);
     } catch (error) {

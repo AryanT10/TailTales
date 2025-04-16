@@ -1,23 +1,69 @@
 // src/components/AddPetForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {auth,app} from '../../services/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection, addDoc,getFirestore } from "firebase/firestore";
 import '../../styles/appoint/AddPetForm.css';
 
 const AddPetForm = ({ onSave, onCancel }) => {
+  const db = getFirestore(app);
+  const [currentUser, setCurrentUser] = useState(null);
   const [petName, setPetName] = useState('');
   const [petType, setPetType] = useState('');
   const [petAge, setPetAge] = useState('');
   const [petBreed, setPetBreed] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    if (!petName || !petType || !petAge) {
+      setError('Please fill out all required fields.');
+      return;
+    }
+
+    if (!currentUser) {
+      setError('You must be logged in to add a pet.');
+      return;
+    }
+
     const newPet = {
-      id: Date.now(),
+      id: Date.now().toString(),
       name: petName,
       type: petType,
       age: petAge,
-      breed: petBreed || 'Not specified'
+      breed: petBreed || 'Not specified',
+      createdAt: new Date().toISOString()
     };
-    onSave(newPet);
+
+    try {
+      
+      const petsRef = collection(db, 'users', currentUser.uid, 'pets');
+      const docRef = await addDoc(petsRef, newPet);
+      const petWithId = { ...newPet, id: docRef.id };
+      
+      if (onSave) onSave(petWithId);
+      console.log(' Pet added to Firestore');
+
+      // Reset form fields
+      setPetName('');
+      setPetType('');
+      setPetAge('');
+      setPetBreed('');
+    } catch (err) {
+      console.error('Error saving pet:', err);
+      setError('Failed to save pet. Please try again.');
+    }
   };
 
   return (

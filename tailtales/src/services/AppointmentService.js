@@ -1,145 +1,67 @@
 // src/services/AppointmentService.js
-// Service to manage appointment data in localStorage
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { app } from "./firebase";
 
-class AppointmentService {
-  /**
-   * Save appointment to localStorage
-   * @param {string} userId - User ID
-   * @param {Object} appointment - Appointment data
-   */
-  static saveAppointment(userId, appointment) {
+const db = getFirestore(app);
+
+const AppointmentService = {
+  async saveAppointment(userId, appointmentData) {
     try {
-      // Get existing appointments
-      const savedAppointments = JSON.parse(localStorage.getItem('userAppointments') || '{}');
-      
-      // Get user's appointments or initialize empty array
-      const userAppointments = savedAppointments[userId] || [];
-      
-      // Add new appointment with a generated ID and default status
-      const newAppointment = {
-        ...appointment,
-        id: Date.now(), // Use timestamp as a simple unique ID
-        status: 'Confirmed',
+      const userAppointmentsRef = collection(db, "users", userId, "appointments");
+      const docRef = await addDoc(userAppointmentsRef, {
+        ...appointmentData,
+        status: "Confirmed",
         createdAt: new Date().toISOString()
-      };
-      
-      // Add to user's appointments
-      userAppointments.push(newAppointment);
-      
-      // Update localStorage
-      savedAppointments[userId] = userAppointments;
-      localStorage.setItem('userAppointments', JSON.stringify(savedAppointments));
-      
-      console.log('Appointment saved successfully:', newAppointment);
-      return newAppointment;
+      });
+      console.log("Appointment saved to Firestore");
+      return docRef.id;
     } catch (error) {
-      console.error('Error saving appointment:', error);
+      console.error(" Error saving appointment:", error);
       throw error;
     }
-  }
-  
-  /**
-   * Get all appointments for a user
-   * @param {string} userId - User ID
-   * @returns {Array} - Array of appointments
-   */
-  static getAppointments(userId) {
+  },
+
+  async getAppointments(userId) {
     try {
-      const savedAppointments = JSON.parse(localStorage.getItem('userAppointments') || '{}');
-      return savedAppointments[userId] || [];
+      const userAppointmentsRef = collection(db, "users", userId, "appointments");
+      const snapshot = await getDocs(userAppointmentsRef);
+      return snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
     } catch (error) {
-      console.error('Error retrieving appointments:', error);
+      console.error(" Error fetching appointments:", error);
       return [];
     }
-  }
-  
-  /**
-   * Update an appointment
-   * @param {string} userId - User ID
-   * @param {string} appointmentId - Appointment ID
-   * @param {Object} updates - Fields to update
-   * @returns {Object|null} - Updated appointment or null if not found
-   */
-  static updateAppointment(userId, appointmentId, updates) {
+  },
+
+  async updateAppointment(userId, appointmentId, updates) {
     try {
-      const savedAppointments = JSON.parse(localStorage.getItem('userAppointments') || '{}');
-      const userAppointments = savedAppointments[userId] || [];
-      
-      // Find the appointment index
-      const appointmentIndex = userAppointments.findIndex(appt => appt.id === appointmentId);
-      
-      if (appointmentIndex === -1) {
-        return null; // Appointment not found
-      }
-      
-      // Update the appointment
-      userAppointments[appointmentIndex] = {
-        ...userAppointments[appointmentIndex],
+      const appointmentRef = doc(db, "users", userId, "appointments", appointmentId);
+      await updateDoc(appointmentRef, {
         ...updates,
         updatedAt: new Date().toISOString()
-      };
-      
-      // Save back to localStorage
-      savedAppointments[userId] = userAppointments;
-      localStorage.setItem('userAppointments', JSON.stringify(savedAppointments));
-      
-      return userAppointments[appointmentIndex];
+      });
     } catch (error) {
-      console.error('Error updating appointment:', error);
+      console.error(" Error updating appointment:", error);
+      throw error;
+    }
+  },
+
+  async cancelAppointment(userId, appointmentId) {
+    return await this.updateAppointment(userId, appointmentId, { status: "Cancelled" });
+  },
+
+  async deleteAppointment(userId, appointmentId) {
+    try {
+      const appointmentRef = doc(db, "users", userId, "appointments", appointmentId);
+      await deleteDoc(appointmentRef);
+      console.log("Appointment deleted from Firestore");
+    } catch (error) {
+      console.error(" Error deleting appointment:", error);
       throw error;
     }
   }
-  
-  /**
-   * Cancel an appointment
-   * @param {string} userId - User ID
-   * @param {string} appointmentId - Appointment ID
-   * @returns {Object|null} - Cancelled appointment or null if not found
-   */
-  static cancelAppointment(userId, appointmentId) {
-    return this.updateAppointment(userId, appointmentId, { status: 'Cancelled' });
-  }
-  
-  /**
-   * Delete an appointment completely
-   * @param {string} userId - User ID
-   * @param {string} appointmentId - Appointment ID
-   * @returns {boolean} - Success status
-   */
-  static deleteAppointment(userId, appointmentId) {
-    try {
-      const savedAppointments = JSON.parse(localStorage.getItem('userAppointments') || '{}');
-      const userAppointments = savedAppointments[userId] || [];
-      
-      // Filter out the appointment to delete
-      const updatedAppointments = userAppointments.filter(appt => appt.id !== appointmentId);
-      
-      // Save back to localStorage
-      savedAppointments[userId] = updatedAppointments;
-      localStorage.setItem('userAppointments', JSON.stringify(savedAppointments));
-      
-      return true;
-    } catch (error) {
-      console.error('Error deleting appointment:', error);
-      return false;
-    }
-  }
-  
-  /**
-   * Get a single appointment by ID
-   * @param {string} userId - User ID
-   * @param {string} appointmentId - Appointment ID
-   * @returns {Object|null} - Appointment or null if not found
-   */
-  static getAppointment(userId, appointmentId) {
-    try {
-      const appointments = this.getAppointments(userId);
-      return appointments.find(appt => appt.id === appointmentId) || null;
-    } catch (error) {
-      console.error('Error retrieving appointment:', error);
-      return null;
-    }
-  }
-}
+};
 
 export default AppointmentService;

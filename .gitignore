@@ -1,1 +1,10 @@
 .DS_Store
+.env
+node_modules
+package-lock.json
+yarn-error.log
+yarn-error.log
+coverage
+dist
+.vscode
+.idea                 
