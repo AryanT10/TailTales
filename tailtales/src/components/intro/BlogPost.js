@@ -1,9 +1,9 @@
 import React from 'react';
-import blog1 from "../images/blog1.jpg";
-import blog2 from "../images/blog2.jpg";
+import blog1 from "../../images/blog1.jpg";
+import blog2 from "../../images/blog2.jpg";
 import { useParams, useNavigate } from 'react-router-dom';
-import Footer from './Footer';
-import '../styles/BlogPost.css';
+import Footer from '../main/Footer';
+import '../../styles/intro/BlogPost.css';
 
 export default function BlogPost() {
   const { id } = useParams();

@@ -1,7 +1,7 @@
 // src/components/ResetPassword.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/ResetPassword.css";
+import "../../styles/users/ResetPassword.css";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");

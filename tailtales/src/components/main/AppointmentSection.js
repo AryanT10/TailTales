@@ -1,6 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import "../styles/AppointmentSection.css"; // Adjust the path as necessary
+import "../../styles/main/AppointmentSection.css"; // Adjust the path as necessary
 
 export default function AppointmentSection() {
   const navigate = useNavigate();

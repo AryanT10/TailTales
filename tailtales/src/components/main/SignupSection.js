@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
-import { auth } from "../services/firebase";
-import "../styles/SignupSection.css";
+import { auth } from "../../services/firebase";
+import "../../styles/main/SignupSection.css";
 
 export default function SignupSection() {
   const [email, setEmail] = useState("");

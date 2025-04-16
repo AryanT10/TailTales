@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import "../styles/HeroSection.css";
+import "../../styles/main/HeroSection.css";
 
 export default function HeroSection() {
   const navigate = useNavigate();

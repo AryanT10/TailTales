@@ -1,7 +1,7 @@
 // src/components/NewPassword.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../styles/ResetPassword.css"; // Reusing existing styles
+import "../../styles/users/ResetPassword.css"; // Reusing existing styles
 
 const NewPassword = () => {
   const [password, setPassword] = useState("");

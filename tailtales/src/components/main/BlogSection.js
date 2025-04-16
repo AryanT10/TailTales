@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/BlogSection.css";
+import "../../styles/main/BlogSection.css";
 
 export default function BlogSection() {
   const navigate = useNavigate();

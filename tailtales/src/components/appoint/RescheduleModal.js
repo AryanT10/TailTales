@@ -1,7 +1,7 @@
 // src/components/RescheduleModal.js
 import React, { useState, useEffect } from 'react';
-import '../styles/RescheduleModal.css';
-import AppointmentService from "../services/AppointmentService";
+import '../../styles/appoint/RescheduleModal.css';
+import AppointmentService from "../../services/AppointmentService";
 
 const RescheduleModal = ({ appointment, onClose, onReschedule, userId }) => {
   const [newDate, setNewDate] = useState('');

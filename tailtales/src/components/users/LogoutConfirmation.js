@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/LogoutConfirmation.css"; // Import the new CSS file
+import "../../styles/users/LogoutConfirmation.css"; // Import the new CSS file
 
 export default function LogoutConfirmation() {
   const navigate = useNavigate();

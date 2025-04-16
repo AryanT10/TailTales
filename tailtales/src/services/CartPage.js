@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useCart } from "../context/CartContext"; // Import useCart hook
-import "../styles/CartPage.css";
+import { useCart } from "../services/CartContext"; // Import useCart hook
+import "../styles/services/CartPage.css";
 
 export default function CartPage({ user }) {
   // Get cart state and functions from cart context

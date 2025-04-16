@@ -1,11 +1,11 @@
 // src/components/ProfilePage.js
 import React, { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
-import "../styles/ProfilePage.css";
-import AddPetForm from './AddPetForm'; // Import the AddPetForm component
-import EditPetForm from './EditPetForm'; // Import the EditPetForm component
+import "../../styles/users/ProfilePage.css";
+import AddPetForm from '../appoint/AddPetForm'; // Import the AddPetForm component
+import EditPetForm from '../appoint/EditPetForm'; // Import the EditPetForm component
 
 export default function ProfilePage({ user, onLogout }) {
   const navigate = useNavigate();

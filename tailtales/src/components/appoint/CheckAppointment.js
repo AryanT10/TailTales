@@ -1,9 +1,9 @@
 // src/components/CheckAppointment.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AppointmentService from "../services/AppointmentService"; // Import the AppointmentService
+import AppointmentService from "../../services/AppointmentService"; // Import the AppointmentService
 import RescheduleModal from "./RescheduleModal"; // Import the new RescheduleModal component
-import "../styles/CheckAppointment.css";
+import "../../styles/appoint/CheckAppointment.css";
 
 export default function CheckAppointment({ user }) {
   const navigate = useNavigate();

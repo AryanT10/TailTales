@@ -1,6 +1,6 @@
 // src/components/EditPetForm.js
 import React, { useState, useEffect } from 'react';
-import '../styles/AddPetForm.css';
+import '../../styles/appoint/AddPetForm.css';
 
 const EditPetForm = ({ pet, onSave, onCancel }) => {
   const [petName, setPetName] = useState('');

@@ -1,8 +1,6 @@
 // src/services/AppointmentService.js
+// Service to manage appointment data in localStorage
 
-/**
- * Service to manage appointment data in localStorage
- */
 class AppointmentService {
   /**
    * Save appointment to localStorage

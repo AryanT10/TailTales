@@ -1,8 +1,8 @@
 // src/components/BookAppointment.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AppointmentService from "../services/AppointmentService"; // Import the AppointmentService
-import "../styles/BookAppointment.css";
+import AppointmentService from "../../services/AppointmentService"; // Import the AppointmentService
+import "../../styles/appoint/BookAppointment.css";
 
 export default function BookAppointment({ user }) {
   const navigate = useNavigate();

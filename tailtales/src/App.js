@@ -3,33 +3,37 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 
-// Components
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import TrendingProducts from './components/TrendingProducts';
-import AppointmentSection from './components/AppointmentSection';
-import BlogSection from './components/BlogSection';
-import SignupSection from './components/SignupSection';
-import Footer from './components/Footer';
-import Login from './components/Login';
-import Registration from './components/Registration'; // Import the new Registration component
-import ResetPassword from './components/ResetPassword';
-import NewPassword from './components/NewPassword';
-import ProfilePage from './components/ProfilePage';
-import OurStory from './components/OurStory';
-import ShopInfo from './components/ShopInfo';
-import CartPage from './components/CartPage';
-import CheckAppointment from './components/CheckAppointment';
-import BookAppointment from './components/BookAppointment';
-import Contact from './components/Contact';
-import LogoutConfirmation from './components/LogoutConfirmation';
-import BlogPost from './components/BlogPost';
+// Components/main
+import Navbar from './components/main/Navbar';
+import HeroSection from './components/main/HeroSection';
+import TrendingProducts from './components/main/TrendingProducts';
+import AppointmentSection from './components/main/AppointmentSection';
+import BlogSection from './components/main/BlogSection';
+import SignupSection from './components/main/SignupSection';
+import Footer from './components/main/Footer';
 
-// Services
+// Components/services
 import { auth } from "./services/firebase";
+import { CartProvider } from './services/CartContext';
+import ShopInfo from './services/ShopInfo';
+import CartPage from './services/CartPage';
 
-// Context
-import { CartProvider } from './context/CartContext';
+// Components/intro
+import Contact from './components/intro/Contact';
+import BlogPost from './components/intro/BlogPost';
+import OurStory from './components/intro/OurStory';
+
+// Components/user
+import Login from './components/users/Login';
+import Registration from './components/users/Registration'; 
+import ResetPassword from './components/users/ResetPassword';
+import NewPassword from './components/users/NewPassword';
+import ProfilePage from './components/users/ProfilePage';
+import LogoutConfirmation from './components/users/LogoutConfirmation';
+
+// Components/appoint
+import CheckAppointment from './components/appoint/CheckAppointment';
+import BookAppointment from './components/appoint/BookAppointment';
 
 // Styles
 import './App.css';

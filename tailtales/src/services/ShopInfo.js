@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../context/CartContext"; // Import useCart hook
-import '../styles/ShopInfo.css';
+import { useCart } from "./CartContext"; // Import useCart hook
+import "../styles/services/ShopInfo.css";
 import product1 from "../images/product1.png";
 import product2 from "../images/product2.png";
 import product3 from "../images/product3.png";

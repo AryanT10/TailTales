@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ContactLink from './ContactLink';
-import "../styles/Footer.css";
+import ContactLink from '../users/ContactLink';
+import "../../styles/main/Footer.css";
 
 export default function Footer() {
   const navigate = useNavigate();

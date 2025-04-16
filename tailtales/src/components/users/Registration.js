@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../services/firebase";
-import "../styles/Login.css"; // Reuse login styles
+import { auth } from "../../services/firebase";
+import "../../styles/users/Login.css"; // Reuse login styles
 
 export default function Registration({ onLogin }) {
   const navigate = useNavigate();

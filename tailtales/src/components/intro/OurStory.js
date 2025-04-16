@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/OurStory.css';
+import '../../styles/intro/OurStory.css';
 
 export default function OurStory() {
   return (

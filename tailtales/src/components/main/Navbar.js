@@ -1,13 +1,13 @@
 // Modified Navbar.js file
 import React from "react";
-import "../styles/Navbar.css";
+import "../../styles/main/Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth } from "../../services/firebase";
 import { motion } from "framer-motion";
-import { useCart } from "../context/CartContext"; // Import useCart hook
-import logo from "../images/logo.png";
+import { useCart } from "../../services/CartContext"; // Import useCart hook
+import logo from "../../images/logo.png";
 
 export default function Navbar({user}) {
   const navigate = useNavigate();
