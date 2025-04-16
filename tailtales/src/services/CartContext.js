@@ -1,5 +1,6 @@
-// src/context/CartContext.js
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+// src/services/CartContext.js
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
+import { auth } from './firebase';
 
 // Define initial state
 const initialState = {
@@ -64,6 +65,12 @@ const cartReducer = (state, action) => {
     
     case 'CLEAR_CART':
       return initialState;
+    
+    case 'LOAD_CART':
+      return {
+        ...action.payload,
+        total: calculateTotal(action.payload.items)
+      };
       
     default:
       return state;
@@ -80,16 +87,42 @@ const calculateTotal = (items) => {
 
 // Cart Provider component
 export const CartProvider = ({ children }) => {
-  // Load cart from localStorage if available
-  const savedCart = localStorage.getItem('cart');
-  const initialCart = savedCart ? JSON.parse(savedCart) : initialState;
+  const [cart, dispatch] = useReducer(cartReducer, initialState);
+  const [currentUserId, setCurrentUserId] = useState(null);
   
-  const [cart, dispatch] = useReducer(cartReducer, initialCart);
+  // Monitor auth state changes
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      const newUserId = user ? user.uid : 'guest';
+      
+      // If user ID changed, we need to load the appropriate cart
+      if (newUserId !== currentUserId) {
+        setCurrentUserId(newUserId);
+        
+        // Load cart data for this specific user
+        const cartKey = `cart_${newUserId}`;
+        const savedCart = localStorage.getItem(cartKey);
+        
+        if (savedCart) {
+          // Load saved cart
+          dispatch({ type: 'LOAD_CART', payload: JSON.parse(savedCart) });
+        } else {
+          // Initialize with empty cart
+          dispatch({ type: 'CLEAR_CART' });
+        }
+      }
+    });
+    
+    return () => unsubscribe();
+  }, [currentUserId]);
   
   // Save cart to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+    if (currentUserId) {
+      const cartKey = `cart_${currentUserId}`;
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+    }
+  }, [cart, currentUserId]);
   
   // Create context value
   const contextValue = {
