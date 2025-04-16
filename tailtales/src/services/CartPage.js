@@ -1,9 +1,14 @@
 import React from "react";
+import { useState  } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useCart } from "../services/CartContext"; // Import useCart hook
 import "../styles/services/CartPage.css";
 
+
 export default function CartPage({ user }) {
+
+  const [cartItems, setCartItems] = useState([]);
+
   // Get cart state and functions from cart context
   const { cart, removeItem, updateQuantity } = useCart();
   
@@ -32,6 +37,31 @@ export default function CartPage({ user }) {
   
   // Calculate total price including HST
   const totalWithTax = cart.total + hstAmount;
+
+
+  const handleCheckout = async () => {
+    try {
+      // Clean the prices first (remove $ and ensure number)
+      const cleanedCartItems = cart.items.map((item) => ({
+        ...item,
+        price: parseFloat(item.price.replace("$", "")) || 0,
+      }));
+  
+      const response = await fetch('http://localhost:4243/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cartItems: cleanedCartItems, userId: user.uid }),
+      });
+  
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      alert("Failed to redirect to checkout.");
+    }
+  };
 
   return (
     <div className="cart-page">
@@ -112,7 +142,7 @@ export default function CartPage({ user }) {
                 <span>Total:</span>
                 <span>${totalWithTax.toFixed(2)}</span>
               </div>
-              <button className="checkout-btn">Proceed to Checkout</button>
+              <button className="checkout-btn" onClick={handleCheckout}>Proceed to Checkout</button>
             </div>
           </>
         )}

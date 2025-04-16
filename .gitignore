@@ -1,10 +1,20 @@
-.DS_Store
+# Node
+node_modules/
 .env
-node_modules
-package-lock.json
-yarn-error.log
-yarn-error.log
-coverage
-dist
-.vscode
-.idea                 
+firebase-admin-key.json
+*.log
+
+# OS / Editor-specific
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Build
+dist/
+build/
+.cache/
+
+# Firebase Emulator (optional if you're using it)
+firebase-debug.log
+firestore-debug.log
