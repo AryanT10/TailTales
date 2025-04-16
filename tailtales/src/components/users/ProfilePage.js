@@ -66,9 +66,12 @@ export default function ProfilePage({ user, onLogout }) {
   
   const handleLogout = async () => {
     try {
+      // Navigate first, before changing auth state
+      navigate("/logout-confirmation"); 
+      
+      // Then sign out and update state
       await signOut(auth);
       onLogout(); // Notify parent that user logged out
-      navigate("/logout-confirmation"); // Navigate to logout confirmation page
     } catch (error) {
       console.error("Logout failed:", error.message);
     }
