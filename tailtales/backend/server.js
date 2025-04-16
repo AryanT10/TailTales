@@ -26,7 +26,10 @@ if (!admin.apps.length) {
   
   // ✅ Setup Express server
   const app = express();
-  app.use(cors());
+  app.use(cors({
+    origin: 'https://team02-prj-666-winter-2025.vercel.app',
+    credentials: true,
+  }));
   app.use(express.json());
 
 // Create Stripe Checkout Session and save to Firestore
@@ -54,8 +57,8 @@ app.post('/create-checkout', async (req, res) => {
         payment_method_types: ['card'],
         mode: 'payment',
         line_items: lineItems,
-        success_url: 'http://localhost:3000/success',
-        cancel_url: 'http://localhost:3000/cart',
+        success_url: 'https://team02-prj-666-winter-2025.vercel.app/success',
+        cancel_url: 'https://team02-prj-666-winter-2025.vercel.app/cart',
       });
   
       // ✅ Prepare and validate Firestore order data
