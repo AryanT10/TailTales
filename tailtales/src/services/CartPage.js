@@ -47,7 +47,7 @@ export default function CartPage({ user }) {
         price: parseFloat(item.price.replace("$", "")) || 0,
       }));
   
-      const response = await fetch('http://localhost:4243/create-checkout', {
+      const response = await fetch('https://tail-tales-backend.onrender.com/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cartItems: cleanedCartItems, userId: user.uid }),
