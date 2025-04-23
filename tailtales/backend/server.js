@@ -26,10 +26,7 @@ if (!admin.apps.length) {
   
   // ✅ Setup Express server
   const app = express();
-  app.use(cors({
-    origin: 'https://team02-prj-666-winter-2025.vercel.app',
-    credentials: true,
-  }));
+  app.use(cors());
   app.use(express.json());
 
 // Create Stripe Checkout Session and save to Firestore
@@ -40,25 +37,29 @@ app.post('/create-checkout', async (req, res) => {
       console.log("🛒 Received cartItems:", cartItems);
   
       // Convert cart items into Stripe line_items
-      const lineItems = cartItems.map((item) => ({
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: item.name || 'Unnamed Product',
-            description: item.description?.trim() || 'Product from TailTales',
+      const lineItems = cartItems.map((item) => {
+        const numericPrice = parseFloat(item.price.toString().replace('$', ''));
+      
+        return {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: item.name || 'Unnamed Product',
+              description: item.description?.trim() || 'Product from TailTales',
+            },
+            unit_amount: Math.round(numericPrice * 1.13 * 100), // ✅ Now it's safe
           },
-          unit_amount: Math.round(Number(item.price) * (1 + 0.13) * 100),   // tax included
-        },
-        quantity: item.quantity || 1,
-      }));
-  
+          quantity: item.quantity || 1,
+        };
+      });
+
       // ✅ Create Stripe Checkout Session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
         line_items: lineItems,
-        success_url: 'https://team02-prj-666-winter-2025.vercel.app/success',
-        cancel_url: 'https://team02-prj-666-winter-2025.vercel.app/cart',
+        success_url: 'http://localhost:3000/success',
+        cancel_url: 'http://localhost:3000/cart',
       });
   
       // ✅ Prepare and validate Firestore order data
