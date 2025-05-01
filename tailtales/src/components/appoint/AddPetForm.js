@@ -1,18 +1,17 @@
-// src/components/AddPetForm.js
-import React, { useState, useEffect } from 'react';
-import {auth,app} from '../../services/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import { collection, addDoc,getFirestore } from "firebase/firestore";
-import '../../styles/appoint/AddPetForm.css';
+import React, { useState, useEffect } from "react";
+import { auth, app } from "../../services/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import "../../styles/appoint/AddPetForm.css";
 
 const AddPetForm = ({ onSave, onCancel }) => {
   const db = getFirestore(app);
   const [currentUser, setCurrentUser] = useState(null);
-  const [petName, setPetName] = useState('');
-  const [petType, setPetType] = useState('');
-  const [petAge, setPetAge] = useState('');
-  const [petBreed, setPetBreed] = useState('');
-  const [error, setError] = useState('');
+  const [petName, setPetName] = useState("");
+  const [petType, setPetType] = useState("");
+  const [petAge, setPetAge] = useState("");
+  const [petBreed, setPetBreed] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -25,15 +24,15 @@ const AddPetForm = ({ onSave, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!petName || !petType || !petAge) {
-      setError('Please fill out all required fields.');
+      setError("Please fill out all required fields.");
       return;
     }
 
     if (!currentUser) {
-      setError('You must be logged in to add a pet.');
+      setError("You must be logged in to add a pet.");
       return;
     }
 
@@ -42,27 +41,26 @@ const AddPetForm = ({ onSave, onCancel }) => {
       name: petName,
       type: petType,
       age: petAge,
-      breed: petBreed || 'Not specified',
-      createdAt: new Date().toISOString()
+      breed: petBreed || "Not specified",
+      createdAt: new Date().toISOString(),
     };
 
     try {
-      
-      const petsRef = collection(db, 'users', currentUser.uid, 'pets');
+      const petsRef = collection(db, "users", currentUser.uid, "pets");
       const docRef = await addDoc(petsRef, newPet);
       const petWithId = { ...newPet, id: docRef.id };
-      
+
       if (onSave) onSave(petWithId);
-      console.log(' Pet added to Firestore');
+      console.log(" Pet added to Firestore");
 
       // Reset form fields
-      setPetName('');
-      setPetType('');
-      setPetAge('');
-      setPetBreed('');
+      setPetName("");
+      setPetType("");
+      setPetAge("");
+      setPetBreed("");
     } catch (err) {
-      console.error('Error saving pet:', err);
-      setError('Failed to save pet. Please try again.');
+      console.error("Error saving pet:", err);
+      setError("Failed to save pet. Please try again.");
     }
   };
 
@@ -71,7 +69,9 @@ const AddPetForm = ({ onSave, onCancel }) => {
       <h3 className="add-pet-form-title">Add a New Pet</h3>
       <form onSubmit={handleSubmit} className="add-pet-form">
         <div className="form-group">
-          <label htmlFor="petName" className="form-label">Pet Name</label>
+          <label htmlFor="petName" className="form-label">
+            Pet Name
+          </label>
           <input
             type="text"
             id="petName"
@@ -81,9 +81,11 @@ const AddPetForm = ({ onSave, onCancel }) => {
             required
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="petType" className="form-label">Pet Type</label>
+          <label htmlFor="petType" className="form-label">
+            Pet Type
+          </label>
           <select
             id="petType"
             className="form-select"
@@ -96,12 +98,16 @@ const AddPetForm = ({ onSave, onCancel }) => {
             <option value="Cat">Cat</option>
             <option value="Bird">Bird</option>
             <option value="Fish">Fish</option>
-            <option value="Small Pet">Small Pet (Hamster, Guinea Pig, etc.)</option>
+            <option value="Small Pet">
+              Small Pet (Hamster, Guinea Pig, etc.)
+            </option>
           </select>
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="petAge" className="form-label">Pet Age</label>
+          <label htmlFor="petAge" className="form-label">
+            Pet Age
+          </label>
           <input
             type="text"
             id="petAge"
@@ -112,9 +118,11 @@ const AddPetForm = ({ onSave, onCancel }) => {
             required
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="petBreed" className="form-label">Pet Breed (Optional)</label>
+          <label htmlFor="petBreed" className="form-label">
+            Pet Breed (Optional)
+          </label>
           <input
             type="text"
             id="petBreed"
@@ -124,19 +132,12 @@ const AddPetForm = ({ onSave, onCancel }) => {
             placeholder="E.g., Golden Retriever"
           />
         </div>
-        
+
         <div className="form-actions">
-          <button
-            type="button"
-            className="cancel-button"
-            onClick={onCancel}
-          >
+          <button type="button" className="cancel-button" onClick={onCancel}>
             Cancel
           </button>
-          <button
-            type="submit"
-            className="save-button"
-          >
+          <button type="submit" className="save-button">
             Save Pet
           </button>
         </div>

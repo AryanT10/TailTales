@@ -1,12 +1,13 @@
 // src/components/main/MobileNavbar.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/main/MobileNavbar.css";
 import logo from "../../images/logo.png";
 
 export default function MobileNavbar({ user }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <nav className="mobile-navbar">
@@ -15,7 +16,10 @@ export default function MobileNavbar({ user }) {
           src={logo}
           alt="Logo"
           className="logo-image"
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            setOpen(false);
+          }}
         />
         <button className="hamburger" onClick={() => setOpen(!open)}>
           {open ? "✕" : "☰"}
@@ -24,17 +28,71 @@ export default function MobileNavbar({ user }) {
 
       {open && (
         <ul className="menu">
-          <li onClick={() => navigate("/shop")}>Shop</li>
-          <li onClick={() => navigate("/book-appointment")}>
+          <li
+            className={location.pathname === "/shop" ? "active" : ""}
+            onClick={() => {
+              navigate("/shop");
+              setOpen(false);
+            }}
+          >
+            Shop
+          </li>
+          <li
+            className={
+              location.pathname === "/book-appointment" ? "active" : ""
+            }
+            onClick={() => {
+              navigate("/book-appointment");
+              setOpen(false);
+            }}
+          >
             Book Appointment
           </li>
-          <li onClick={() => navigate("/check-appointment")}>
+          <li
+            className={
+              location.pathname === "/check-appointment" ? "active" : ""
+            }
+            onClick={() => {
+              navigate("/check-appointment");
+              setOpen(false);
+            }}
+          >
             Check Appointment
           </li>
-          <li onClick={() => navigate("/our-story")}>Our Story</li>
-          <li onClick={() => navigate("/contact")}>Contact</li>
-          <li onClick={() => navigate("/cart")}>Cart</li>
-          <li onClick={() => navigate(user ? "/profile" : "/login")}>
+          <li
+            className={location.pathname === "/our-story" ? "active" : ""}
+            onClick={() => {
+              navigate("/our-story");
+              setOpen(false);
+            }}
+          >
+            Our Story
+          </li>
+          <li
+            className={location.pathname === "/contact" ? "active" : ""}
+            onClick={() => {
+              navigate("/contact");
+              setOpen(false);
+            }}
+          >
+            Contact
+          </li>
+          <li
+            className={location.pathname === "/cart" ? "active" : ""}
+            onClick={() => {
+              navigate("/cart");
+              setOpen(false);
+            }}
+          >
+            Cart
+          </li>
+          <li
+            className={location.pathname === "/profile" ? "active" : ""}
+            onClick={() => {
+              navigate(user ? "/profile" : "/login");
+              setOpen(false);
+            }}
+          >
             {user ? "Profile" : "Login"}
           </li>
         </ul>

@@ -8,33 +8,37 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { app } from "../services/firebase";
+import { app } from "./firebase";
 
 const db = getFirestore(app);
 
 export default function ProviderDashboard({ user }) {
   const [appointments, setAppointments] = useState([]);
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      if (!user) return;
+  useEffect(
+    () => {
+      const fetchAppointments = async () => {
+        if (!user) return;
 
-      const q = query(
-        collectionGroup(db, "appointments"),
-        where("providerId", "==", user.uid)
-      );
+        const q = query(
+          collectionGroup(db, "appointments"),
+          where("providerId", "==", user.uid)
+        );
 
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        ref: doc.ref,
-      }));
-      setAppointments(data);
-    };
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          ref: doc.ref,
+        }));
+        setAppointments(data);
+      };
 
-    fetchAppointments();
-  }, [user]);
+      fetchAppointments();
+    },
+    [user],
+    [doc]
+  );
 
   const handleStatusUpdate = async (ref, newStatus) => {
     await updateDoc(ref, { status: newStatus });

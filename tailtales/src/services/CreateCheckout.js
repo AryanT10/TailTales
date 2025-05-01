@@ -1,12 +1,12 @@
-import Stripe from 'stripe';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { app } from '../../services/firebase';
+import Stripe from "stripe";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from "../../services/firebase";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const db = getFirestore(app);
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end("Method not allowed");
+  if (req.method !== "POST") return res.status(405).end("Method not allowed");
 
   const { cartItems, userId } = req.body;
 
@@ -15,14 +15,14 @@ export default async function handler(req, res) {
 
     // ✅ Create Stripe checkout session with HST included in prices
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
+      payment_method_types: ["card"],
+      mode: "payment",
       line_items: cartItems.map((item) => ({
         price_data: {
-          currency: 'cad',
+          currency: "cad",
           product_data: {
-            name: item.name || 'Unnamed Product',
-            description: item.description?.trim() || 'Product from TailTales',
+            name: item.name || "Unnamed Product",
+            description: item.description?.trim() || "Product from TailTales",
           },
           unit_amount: Math.round(Number(item.price) * (1 + HST_RATE) * 100), // tax included
         },
@@ -38,17 +38,17 @@ export default async function handler(req, res) {
       0
     );
 
-    await addDoc(collection(db, 'users', userId, 'orders'), {
+    await addDoc(collection(db, "users", userId, "orders"), {
       cartItems,
       amount: Number(totalAmount.toFixed(2)),
       createdAt: new Date().toISOString(),
-      status: 'Pending',
+      status: "Pending",
       stripeSessionId: session.id,
     });
 
     res.status(200).json({ url: session.url });
   } catch (err) {
-    console.error('Stripe error:', err);
-    res.status(500).json({ error: 'Checkout failed.' });
+    console.error("Stripe error:", err);
+    res.status(500).json({ error: "Checkout failed." });
   }
 }

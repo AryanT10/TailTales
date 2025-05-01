@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { auth, app } from "../services/firebase";
+import { auth, app } from "./firebase";
 import "../styles/provider/ProviderLogin.css";
 
 const db = getFirestore(app);

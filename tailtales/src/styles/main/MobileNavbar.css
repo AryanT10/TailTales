@@ -1,4 +1,5 @@
 .mobile-navbar {
+    margin: 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -6,7 +7,7 @@
     z-index: 1000;
     background-color: #191919;
     color: white;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
   
@@ -22,6 +23,11 @@
     object-fit: contain;
     display: block;
   }
+
+  .hamburger:focus{
+    outline: none;
+    border-radius: 8px;
+  }
   
 .mobile-navbar .hamburger {
     font-size: 1.8rem;
@@ -32,6 +38,8 @@
   }
   
   .mobile-navbar .menu {
+    list-style: none;
+    padding-left: 0;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -54,6 +62,30 @@
     padding: 0.4rem 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+  }
+
+  .mobile-navbar .menu li.active {
+    background-color: #ff6b6b !important;
+    color: white !important;
+    font-weight: 600;
+    border: 1px solid #ff6b6b;
+  }
+
+  .mobile-navbar .menu li {
+    color: white;
+    background: #2a2a2a;
+    border: 1px solid #ff6b6b;
+    border-radius: 18px;
+    text-align: center;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    list-style: none;
+  }
+  
+  .mobile-navbar .menu li:hover {
+    background-color: #ff6b6b;
+    color: white;
   }
   
   .mobile-navbar .menu a:hover,
