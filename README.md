@@ -78,7 +78,9 @@ npm run start
 ### Future Plans
 
 Provider service area filtering by location
+
 • Email and SMS notifications
+
 • Admin dashboard for analytics and moderation
 
 ⸻
